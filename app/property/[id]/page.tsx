@@ -1,34 +1,50 @@
 'use client'
 
-import { ArrowLeft, Heart, MoreVertical, Share2 } from 'lucide-react'
+import { Heart, MoreVertical, Share2 } from 'lucide-react'
 import Image from "next/image"
-import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setShowHeaderAndNav } from '@/lib/redux/uiSlice'
+import { BackHeader } from "@/components/back-header"
+import { useRouter } from 'next/navigation'
+import { RootState } from '@/lib/redux/store'
+import { motion } from 'framer-motion'
 
 export default function PropertyPage({ params }: { params: { id: string } }) {
+  const dispatch = useDispatch()
   const router = useRouter()
+  const property = useSelector((state: RootState) => 
+    state.properties.items.find(p => p.id === params.id)
+  )
+
+  useEffect(() => {
+    dispatch(setShowHeaderAndNav(false))
+  }, [dispatch])
+
+  const handleGoBack = () => {
+    router.back()
+  }
+
+  if (!property) {
+    return <div>Property not found</div>
+  }
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center justify-between">
-          <button
-            onClick={() => router.back()}
-            className="flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2"
+      <BackHeader title="Property Details" onBack={handleGoBack} />
+      <motion.main
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="container pb-20 lg:pb-6"
+      >
+        <div className="lg:grid lg:grid-cols-2 lg:gap-8 mt-6">
+          <motion.div
+            layoutId={`property-image-${property.id}`}
+            className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl"
           >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Go Back</span>
-          </button>
-          <Button variant="ghost" size="icon">
-            <MoreVertical className="h-5 w-5" />
-          </Button>
-        </div>
-      </header>
-
-      <main className="container pb-20 lg:pb-6">
-        <div className="lg:grid lg:grid-cols-2 lg:gap-8">
-          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl">
             <Badge 
               variant="secondary" 
               className="absolute left-4 top-4 z-10 bg-white/80 backdrop-blur-sm"
@@ -43,22 +59,22 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
               <Heart className="h-5 w-5" />
             </Button>
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-SypxMUxghmfQD1feY8y3sm5aRrDvBP.png"
-              alt="Property"
+              src={property.image || "/placeholder.svg"}
+              alt={property.title}
               fill
               className="object-cover"
             />
-          </div>
+          </motion.div>
 
           <div className="mt-6 space-y-6 lg:mt-0">
             <div>
-              <h1 className="text-2xl font-semibold">Lakeshore Blvd West</h1>
-              <p className="text-muted-foreground">Celina, Delaware</p>
+              <motion.h1 layoutId={`property-title-${property.id}`} className="text-2xl font-semibold">{property.title}</motion.h1>
+              <motion.p layoutId={`property-location-${property.id}`} className="text-muted-foreground">{property.location}</motion.p>
             </div>
 
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-2xl font-semibold">$3,822</p>
+                <motion.p layoutId={`property-price-${property.id}`} className="text-2xl font-semibold">${property.price}</motion.p>
                 <p className="text-sm text-muted-foreground">Residence</p>
               </div>
               <Button variant="ghost" size="icon" className="rounded-full">
@@ -66,36 +82,33 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
               </Button>
             </div>
 
-            <div className="flex gap-4 text-sm text-muted-foreground">
+            <motion.div layoutId={`property-specs-${property.id}`} className="flex gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
-                <span>4 Beds</span>
+                <span>{property.specs.beds} Beds</span>
               </div>
               <div className="flex items-center gap-1">
-                <span>2 Bath</span>
+                <span>{property.specs.baths} Bath</span>
               </div>
               <div className="flex items-center gap-1">
-                <span>1493m²</span>
+                <span>{property.specs.area}</span>
               </div>
-              <div className="flex items-center gap-1">
-                <span>Penthouse</span>
-              </div>
-            </div>
+            </motion.div>
 
             <p className="text-sm text-muted-foreground">
-              The House "Neither Big Nor Small" Is Designed For A Family Of 8. The Entrance Hall Divides The...
+              {property.description}
             </p>
 
-            <div className="fixed bottom-6 left-0 right-0 flex gap-4 px-4 lg:static lg:px-0">
+            <div className="flex gap-4">
               <Button variant="outline" className="flex-1">
                 Explore in VR
               </Button>
-              <Button className="flex-1 bg-[#2C3333] hover:bg-[#2C3333]/90">
+              <Button className="flex-1 bg-primary hover:bg-primary/90">
                 Book a Call
               </Button>
             </div>
           </div>
         </div>
-      </main>
+      </motion.main>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { Camera, Heart, Home, MessageCircle } from 'lucide-react'
+import { Heart, Home, Scale, Bell, User } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
@@ -26,16 +26,6 @@ export function SideNav({ className }: SideNavProps) {
           <span>Home</span>
         </Link>
         <Link
-          href="/camera"
-          className={cn(
-            "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-colors hover:text-foreground",
-            pathname === "/camera" && "bg-secondary text-foreground"
-          )}
-        >
-          <Camera className="h-5 w-5" />
-          <span>Camera</span>
-        </Link>
-        <Link
           href="/favorites"
           className={cn(
             "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-colors hover:text-foreground",
@@ -46,14 +36,14 @@ export function SideNav({ className }: SideNavProps) {
           <span>Favorites</span>
         </Link>
         <Link
-          href="/messages"
+          href="/compare"
           className={cn(
             "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-colors hover:text-foreground",
-            pathname === "/messages" && "bg-secondary text-foreground"
+            pathname === "/compare" && "bg-secondary text-foreground"
           )}
         >
-          <MessageCircle className="h-5 w-5" />
-          <span>Messages</span>
+          <Scale className="h-5 w-5" />
+          <span>Compare</span>
         </Link>
       </nav>
     </div>

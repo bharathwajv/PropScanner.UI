@@ -10,7 +10,7 @@ interface NavTabsProps {
 
 export function NavTabs({ tabs, selected, onSelect }: NavTabsProps) {
   return (
-    <div className="inline-flex rounded-full border border-gray-200 bg-white p-1">
+    <div className="inline-flex justify-center rounded-full border border-gray-200 bg-white p-1">
       {tabs.map((tab) => (
         <button
           key={tab}
