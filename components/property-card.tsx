@@ -56,7 +56,7 @@ export default function PropertyCard({ id, image, title, price, specs, has360Tou
     <motion.div
       layoutId={`property-${id}`}
       onClick={handleCardClick}
-      className="cursor-pointer"
+      className="cursor-pointer p-2"
     >
       <Card className="overflow-hidden hover:shadow-md transition-shadow">
         <motion.div className="relative aspect-[4/3]" layoutId={`property-image-${id}`}>
