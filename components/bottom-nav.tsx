@@ -1,11 +1,13 @@
-'use client'
+"use client"
 
-import { Home, Heart, Scale, Search, ScanLine } from 'lucide-react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { cn } from '@/lib/utils'
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { Home, Heart, Scale, Search } from "lucide-react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { cn } from "@/lib/utils"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { setIsSearchOpen } from "@/lib/redux/uiSlice"
+import type { RootState } from "@/lib/redux/store"
 
 interface BottomNavProps {
   className?: string
@@ -16,10 +18,11 @@ export function BottomNav({ className }: BottomNavProps) {
   const [isVisible, setIsVisible] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
   const dispatch = useDispatch()
+  const isSearchOpen = useSelector((state: RootState) => state.ui.isSearchOpen)
 
   useEffect(() => {
     const controlNavbar = () => {
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         const currentScrollY = window.scrollY
         if (currentScrollY > lastScrollY && currentScrollY > 0) {
           setIsVisible(false)
@@ -30,66 +33,66 @@ export function BottomNav({ className }: BottomNavProps) {
       }
     }
 
-    if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', controlNavbar)
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", controlNavbar)
       return () => {
-        window.removeEventListener('scroll', controlNavbar)
+        window.removeEventListener("scroll", controlNavbar)
       }
     }
   }, [lastScrollY])
 
+  if (isSearchOpen) {
+    return null
+  }
+
   return (
-    <div className={cn(
-      "fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-300 w-full px-4",
-      isVisible ? "bottom-4" : "-bottom-full",
-      className
-    )}>
+    <div
+      className={cn(
+        "fixed left-1/2 -translate-x-1/2 z-[90] transition-all duration-300 w-full px-4",
+        isVisible ? "bottom-6" : "-bottom-full",
+        className,
+      )}
+    >
       <div className="flex justify-between max-w-lg mx-auto">
         {/* Left Navigation Group */}
-        <nav className="flex items-center gap-1 bg-white rounded-full px-4 py-3 shadow-lg">
-          <Link 
+        <nav className="flex items-center gap-1 bg-white rounded-full px-2 py-2 shadow-lg">
+          <Link
             href="/"
             className={cn(
-              "p-2 rounded-full transition-colors",
-              pathname === "/" ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+              "p-3 rounded-full transition-colors",
+              pathname === "/" || pathname === "/home" ? "bg-primary text-primary-foreground" : "text-muted-foreground",
             )}
           >
-            <Home className="w-5 h-5" />
+            <Home className="w-6 h-6" />
           </Link>
-          <Link 
+          <Link
             href="/favorites"
             className={cn(
-              "p-2 rounded-full transition-colors",
-              pathname === "/favorites" ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+              "p-3 rounded-full transition-colors",
+              pathname === "/favorites" ? "bg-primary text-primary-foreground" : "text-muted-foreground",
             )}
           >
-            <Heart className="w-5 h-5" />
+            <Heart className="w-6 h-6" />
           </Link>
-          <Link 
+          <Link
             href="/compare"
             className={cn(
-              "p-2 rounded-full transition-colors",
-              pathname === "/compare" ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+              "p-3 rounded-full transition-colors",
+              pathname === "/compare" ? "bg-primary text-primary-foreground" : "text-muted-foreground",
             )}
           >
-            <Scale className="w-5 h-5" />
+            <Scale className="w-6 h-6" />
           </Link>
         </nav>
 
-        {/* Right Action Buttons */}
-        <div className="flex items-center gap-2">
+        {/* Right Action Button */}
+        <div className="w-14 h-14">
           <button
-            onClick={() => dispatch({ type: 'ui/setIsSearchOpen', payload: true })}
-            className="p-4 bg-white rounded-full shadow-lg text-muted-foreground hover:text-primary transition-colors"
+            onClick={() => dispatch(setIsSearchOpen(true))}
+            className="w-full h-full bg-white rounded-full shadow-lg text-muted-foreground hover:text-primary transition-colors flex items-center justify-center"
           >
-            <Search className="w-5 h-5" />
+            <Search className="w-6 h-6" />
           </button>
-          <Link
-            href="/camera"
-            className="p-4 bg-white rounded-full shadow-lg text-muted-foreground hover:text-primary transition-colors"
-          >
-            <ScanLine className="w-5 h-5" />
-          </Link>
         </div>
       </div>
     </div>

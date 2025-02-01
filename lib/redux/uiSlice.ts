@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 interface UIState {
   showHeaderAndNav: boolean
@@ -7,19 +7,23 @@ interface UIState {
   isLoading: boolean
   isFilterOpen: boolean
   isSearchOpen: boolean
+  isPropertyDetailsOpen: boolean
+  selectedPropertyId: string | null
 }
 
 const initialState: UIState = {
   showHeaderAndNav: true,
-  searchQuery: '',
-  selectedTab: 'Nearby',
+  searchQuery: "",
+  selectedTab: "Nearby",
   isLoading: false,
   isFilterOpen: false,
-  isSearchOpen: false
+  isSearchOpen: false,
+  isPropertyDetailsOpen: false,
+  selectedPropertyId: null,
 }
 
 export const uiSlice = createSlice({
-  name: 'ui',
+  name: "ui",
   initialState,
   reducers: {
     setShowHeaderAndNav: (state, action: PayloadAction<boolean>) => {
@@ -39,8 +43,14 @@ export const uiSlice = createSlice({
     },
     setIsSearchOpen: (state, action: PayloadAction<boolean>) => {
       state.isSearchOpen = action.payload
-    }
-  }
+    },
+    setPropertyDetailsOpen: (state, action: PayloadAction<boolean>) => {
+      state.isPropertyDetailsOpen = action.payload
+    },
+    setSelectedPropertyId: (state, action: PayloadAction<string | null>) => {
+      state.selectedPropertyId = action.payload
+    },
+  },
 })
 
 export const {
@@ -49,7 +59,9 @@ export const {
   setSelectedTab,
   setIsLoading,
   setIsFilterOpen,
-  setIsSearchOpen
+  setIsSearchOpen,
+  setPropertyDetailsOpen,
+  setSelectedPropertyId,
 } = uiSlice.actions
 
 export default uiSlice.reducer

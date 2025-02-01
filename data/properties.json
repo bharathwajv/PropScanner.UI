@@ -1,0 +1,66 @@
+[
+  {
+    "id": "prop1",
+    "title": "Luxury Apartment in City Center",
+    "price": 500000,
+    "location": "Downtown, City",
+    "type": "Apartment",
+    "image": "https://example.com/luxury-apartment.jpg",
+    "specs": {
+      "beds": 3,
+      "baths": 2,
+      "area": "1500 sq ft"
+    },
+    "yearBuilt": 2020,
+    "floors": 20,
+    "parking": "2 Covered",
+    "amenities": ["Pool", "Gym", "24/7 Security"],
+    "nearbyPlaces": ["Shopping Mall", "Metro Station", "Park"],
+    "energyRating": "A",
+    "taxesPerYear": 5000,
+    "description": "A stunning luxury apartment in the heart of the city with breathtaking views and top-notch amenities."
+  },
+  {
+    "id": "prop2",
+    "title": "Cozy Family Home in Suburbs",
+    "price": 350000,
+    "location": "Greenville, Suburb",
+    "type": "House",
+    "image": "https://example.com/family-home.jpg",
+    "specs": {
+      "beds": 4,
+      "baths": 3,
+      "area": "2000 sq ft"
+    },
+    "yearBuilt": 2015,
+    "floors": 2,
+    "parking": "Garage for 2 cars",
+    "amenities": ["Garden", "Fireplace", "Basement"],
+    "nearbyPlaces": ["School", "Supermarket", "Community Center"],
+    "energyRating": "B",
+    "taxesPerYear": 4000,
+    "description": "A perfect family home in a quiet suburb with ample space and a beautiful garden."
+  },
+  {
+    "id": "prop3",
+    "title": "Modern Studio in Tech Hub",
+    "price": 250000,
+    "location": "Silicon Valley, Tech City",
+    "type": "Studio",
+    "image": "https://example.com/modern-studio.jpg",
+    "specs": {
+      "beds": 1,
+      "baths": 1,
+      "area": "600 sq ft"
+    },
+    "yearBuilt": 2022,
+    "floors": 15,
+    "parking": "1 Covered",
+    "amenities": ["Rooftop Terrace", "Co-working Space", "Smart Home Features"],
+    "nearbyPlaces": ["Tech Campuses", "Cafes", "Bike Trails"],
+    "energyRating": "A+",
+    "taxesPerYear": 3000,
+    "description": "A sleek and modern studio apartment perfect for young professionals in the heart of the tech hub."
+  }
+]
+

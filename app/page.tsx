@@ -1,64 +1,30 @@
-'use client'
+"use client"
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { useDispatch, useSelector } from 'react-redux'
-import { setShowHeaderAndNav, setSearchQuery } from '@/lib/redux/uiSlice'
-import { RootState } from '@/lib/redux/store'
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import PropertyCard from "@/components/property-card"
-import { Search } from 'lucide-react'
-import { SearchDrawer } from "@/components/search-drawer"
-import { PriceAnalytics } from "@/components/price-analytics"
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { LoadingScreen } from "@/components/loading-screen"
 
-export default function HomePage() {
+export default function RootPage() {
   const router = useRouter()
-  const dispatch = useDispatch()
-  const { searchQuery, isSearchOpen } = useSelector((state: RootState) => state.ui)
-  const properties = useSelector((state: RootState) => state.properties.items)
 
   useEffect(() => {
-    dispatch(setShowHeaderAndNav(true))
-    const onboardingCompleted = localStorage.getItem('onboardingCompleted')
-    if (!onboardingCompleted) {
-      router.push('/onboarding')
+    // Check if this is the first visit
+    const isFirstVisit = !localStorage.getItem("hasVisited")
+    const onboardingCompleted = localStorage.getItem("onboardingCompleted")
+
+    if (isFirstVisit) {
+      // Set the flag for future visits
+      localStorage.setItem("hasVisited", "true")
+      // Show loading screen for first time visitors
+      setTimeout(() => {
+        router.push(onboardingCompleted ? "/home" : "/onboarding")
+      }, 3000) // Show loading screen for 3 seconds
+    } else {
+      // For returning visitors, go directly to home if onboarding is completed
+      router.push(onboardingCompleted ? "/home" : "/onboarding")
     }
-  }, [dispatch, router])
+  }, [router])
 
-  const handleSearch = (query: string) => {
-    router.push(`/search-results?q=${encodeURIComponent(query)}`)
-  }
-
-  return (
-    <div className="container py-4 space-y-6">
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <Input
-          placeholder="Find Your New apartment, House, lands and more"
-          className="pl-10 pr-4 bg-gray-100 border-none"
-          value={searchQuery}
-          onChange={(e) => dispatch(setSearchQuery(e.target.value))}
-          onKeyPress={(e) => e.key === 'Enter' && dispatch({ type: 'ui/setIsSearchOpen', payload: true })}
-        />
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold m-2">For You</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:px-4">
-          {properties.slice(0, 4).map(property => (
-            <PropertyCard key={property.id} {...property} />
-          ))}
-        </div>
-      </div>
-
-      <div className="text-center">
-        <Button onClick={() => handleSearch(searchQuery)}>View More Properties</Button>
-      </div>
-      <div className="space-y-6">
-        <PriceAnalytics />
-      </div>
-    </div>
-  )
+  return <LoadingScreen />
 }
 

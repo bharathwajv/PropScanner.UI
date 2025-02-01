@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { cn } from "@/lib/utils"
 
@@ -16,10 +16,10 @@ export function NavTabs({ tabs, selected, onSelect }: NavTabsProps) {
           key={tab}
           onClick={() => onSelect(tab)}
           className={cn(
-            "relative px-4 py-2 text-sm transition-colors",
-            selected === tab 
-              ? "text-foreground font-medium before:absolute before:top-0 before:left-1/2 before:-translate-x-1/2 before:w-1 before:h-1 before:bg-primary before:rounded-full" 
-              : "text-muted-foreground"
+            "relative px-6 py-2 text-sm transition-colors rounded-full",
+            selected === tab
+              ? "bg-primary text-primary-foreground font-medium"
+              : "text-muted-foreground hover:text-foreground",
           )}
         >
           {tab}

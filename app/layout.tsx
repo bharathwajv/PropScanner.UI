@@ -1,14 +1,16 @@
-import { Providers } from './providers'
-import { Layout } from '@/components/layout'
-import { Toaster } from 'react-hot-toast'
-import { Metadata } from 'next'
-import { AnimatePresence } from 'framer-motion'
+import { Providers } from "./providers"
+import { Layout } from "@/components/layout"
+import { Toaster } from "react-hot-toast"
+import type { Metadata } from "next"
+import { AnimatePresence } from "framer-motion"
+import { LoadingScreen } from "@/components/loading-screen"
+import { usePathname } from "next/navigation"
 
 export const metadata: Metadata = {
-  title: 'PropScan',
-  description: 'Find your dream property with PropScan',
+  title: "PropScanner",
+  description: "Find your dream property with PropScanner",
   viewport: {
-    width: 'device-width',
+    width: "device-width",
     initialScale: 1,
     maximumScale: 1,
     userScalable: false,
@@ -16,13 +18,12 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
   return (
     <html lang="en">
       <body>
         <Providers>
-          <AnimatePresence mode="wait">
-            <Layout>{children}</Layout>
-          </AnimatePresence>
+          <AnimatePresence mode="wait">{pathname !== "/" ? <Layout>{children}</Layout> : children}</AnimatePresence>
           <Toaster />
         </Providers>
       </body>
