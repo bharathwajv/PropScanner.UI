@@ -1,13 +1,13 @@
 "use client"
 
 import { useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { useDispatch, useSelector } from "react-redux"
 import { setShowHeaderAndNav, setIsSearchOpen, setIsFilterOpen, setSelectedTab } from "@/lib/redux/uiSlice"
 import type { RootState } from "@/lib/redux/store"
 import { Input } from "@/components/ui/input"
 import PropertyCard from "@/components/property-card"
-import { Search, ArrowLeft, SlidersHorizontal, Bell, BellOff } from "lucide-react"
+import { Search, SlidersHorizontal, Bell, BellOff } from "lucide-react"
 import { SearchDialog } from "@/components/search/search-dialog"
 import { Button } from "@/components/ui/button"
 import { FilterDrawer } from "@/components/filter-drawer"
@@ -17,9 +17,9 @@ import { toast } from "react-hot-toast"
 import { addNotificationAlert, removeNotificationAlert } from "@/lib/redux/notificationsSlice"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
+import { PageHeader } from "@/components/shared/page-header"
 
 export default function SearchResultsPage() {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const dispatch = useDispatch()
   const { isSearchOpen, isFilterOpen, selectedTab } = useSelector((state: RootState) => state.ui)
@@ -32,10 +32,6 @@ export default function SearchResultsPage() {
   useEffect(() => {
     dispatch(setShowHeaderAndNav(false))
   }, [dispatch])
-
-  const handleGoBack = () => {
-    router.back()
-  }
 
   const isNotificationSet = notificationAlerts.some((alert) => alert.location === searchLocation)
 
@@ -57,65 +53,53 @@ export default function SearchResultsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-4 space-y-4">
-      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 pb-4">
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center relative">
-            <button 
-              onClick={handleGoBack} 
-              className="flex items-center gap-2 rounded-full bg-gray-100/80 px-4 py-2.5 hover:bg-gray-200/80 transition-colors"
+    <div className="min-h-screen flex flex-col">
+      <PageHeader title="Search Results">
+        <div className="flex gap-2">
+          <div className="relative cursor-pointer flex-grow" onClick={() => dispatch(setIsSearchOpen(true))}>
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Find Your New apartment, House, lands and more"
+              value={searchLocation}
+              className="pl-10 pr-4 bg-muted cursor-pointer"
+              readOnly
+            />
+          </div>
+          <Button
+            variant="outline"
+            size="icon"
+            className="rounded-lg border-2"
+            onClick={() => dispatch(setIsFilterOpen(true))}
+          >
+            <SlidersHorizontal className="h-4 w-4" />
+          </Button>
+        </div>
+
+        <div className="flex justify-center">
+          <NavTabs tabs={tabs} selected={selectedTab} onSelect={(tab) => dispatch(setSelectedTab(tab))} />
+        </div>
+      </PageHeader>
+
+      <div className="flex-1 container mx-auto px-4 py-6 space-y-6">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {properties.map((property, index) => (
+            <motion.div
+              key={property.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05 }}
             >
-              <ArrowLeft className="h-5 w-5" />
-              <span className="text-sm font-medium">Go Back</span>
-            </button>
-            <h1 className="absolute left-1/2 -translate-x-1/2 text-lg font-semibold">Search Results</h1>
-          </div>
-
-          <div className="flex gap-2">
-        <div className="relative cursor-pointer flex-grow" onClick={() => dispatch(setIsSearchOpen(true))}>
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder="Find Your New apartment, House, lands and more"
-            value={searchLocation}
-            className="pl-10 pr-4 bg-muted cursor-pointer"
-            readOnly
-          />
+              <PropertyCard {...property} />
+            </motion.div>
+          ))}
         </div>
-        <Button
-          variant="outline"
-          size="icon"
-          className="rounded-lg border-2"
-          onClick={() => dispatch(setIsFilterOpen(true))}
-        >
-          <SlidersHorizontal className="h-4 w-4" />
-        </Button>
       </div>
-
-          <div className="flex justify-center">
-            <NavTabs tabs={tabs} selected={selectedTab} onSelect={(tab) => dispatch(setSelectedTab(tab))} />
-          </div>
-        </div>
-      </header>
 
       <SearchDialog
         open={isSearchOpen}
         onOpenChange={(open) => dispatch(setIsSearchOpen(open))}
         initialLocation={searchLocation}
       />
-
-
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {properties.map((property, index) => (
-          <motion.div
-            key={property.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.05 }}
-          >
-            <PropertyCard {...property} />
-          </motion.div>
-        ))}
-      </div>
 
       <PropertyDetailsPopup />
 
