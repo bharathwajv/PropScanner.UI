@@ -20,7 +20,7 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(320, 100%, 80%)",
+          DEFAULT: "hsl(0, 0.00%, 0.00%)",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -54,7 +54,8 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+        sans: ["Recoleta", ...fontFamily.sans],
+        recoleta: ["Recoleta", ...fontFamily.sans],
       },
       keyframes: {
         "accordion-down": {
