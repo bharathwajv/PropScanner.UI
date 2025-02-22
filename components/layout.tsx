@@ -37,8 +37,8 @@ export function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       {showHeaderAndNav && (
-        <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="container flex h-14 items-center">
+        <div className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
+          <header className="container mx-auto py-3 border-b">
             <div className="flex w-full justify-between items-center gap-4">
               <Link
                 href="/"
@@ -47,10 +47,13 @@ export function Layout({ children }: LayoutProps) {
                 PropScan
               </Link>
               <div className="flex items-center gap-4">
-                <Link href="/notifications">
+                <Link href="/notifications" className="p-2 hover:bg-secondary/80 rounded-full transition-colors">
                   <Bell className="w-5 h-5" />
                 </Link>
-                <button onClick={handleProfileClick}>
+                <button 
+                  onClick={handleProfileClick}
+                  className="p-1 hover:bg-secondary/80 rounded-full transition-colors"
+                >
                   <Avatar>
                     <AvatarImage src="/placeholder-user.jpg" alt="User" />
                     <AvatarFallback>U</AvatarFallback>
@@ -58,8 +61,8 @@ export function Layout({ children }: LayoutProps) {
                 </button>
               </div>
             </div>
-          </div>
-        </header>
+          </header>
+        </div>
       )}
       <div className="flex">
         {showHeaderAndNav && <SideNav className="hidden lg:block" />}

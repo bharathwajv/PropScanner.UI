@@ -2,9 +2,10 @@
 
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "@/lib/redux/store"
-import { setPropertyDetailsOpen } from "@/lib/redux/uiSlice"
+import { setPropertyDetailsOpen, setSelectedPropertyId } from "@/lib/redux/uiSlice"
 import { pinField, unpinField } from "@/lib/redux/propertiesSlice"
 import { motion, AnimatePresence } from "framer-motion"
+import type { Property } from "@/lib/types"
 import {
   X,
   Heart,
@@ -25,7 +26,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { toggleFavorite } from "@/lib/redux/favoritesSlice"
-import { addToCompare } from "@/lib/redux/compareSlice"
+import { addToCompare, removeFromCompare } from "@/lib/redux/compareSlice"
 import { toast } from "react-hot-toast"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
@@ -35,6 +36,7 @@ export function PropertyDetailsPopup() {
   const { isPropertyDetailsOpen, selectedPropertyId } = useSelector((state: RootState) => state.ui)
   const property = useSelector((state: RootState) => state.properties.items.find((p) => p.id === selectedPropertyId))
   const isFavorite = useSelector((state: RootState) => state.favorites.ids.includes(selectedPropertyId || ""))
+  const isCompared = useSelector((state: RootState) => state.compare.ids.includes(selectedPropertyId || ""))
   const compareIds = useSelector((state: RootState) => state.compare.ids)
   const pinnedFields = useSelector((state: RootState) => state.properties.pinnedFields)
 
@@ -42,14 +44,18 @@ export function PropertyDetailsPopup() {
 
   const handleClose = () => {
     dispatch(setPropertyDetailsOpen(false))
+    dispatch(setSelectedPropertyId(null))
   }
 
   const handleToggleFavorite = () => {
     dispatch(toggleFavorite(property.id))
   }
 
-  const handleAddToCompare = () => {
-    if (compareIds.length < 3) {
+  const handleToggleCompare = () => {
+    if (isCompared) {
+      dispatch(removeFromCompare(property.id))
+      toast.success("Removed from compare")
+    } else if (compareIds.length < 3) {
       dispatch(addToCompare(property.id))
       toast.success("Added to compare")
     } else {
@@ -91,8 +97,8 @@ export function PropertyDetailsPopup() {
             transition={{ duration: 0.2, ease: "easeIn" }}
             className="bg-background rounded-lg shadow-lg overflow-hidden w-full h-full sm:h-[90vh] sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[60%] max-w-4xl relative flex flex-col"
           >
-            <div className="absolute top-0 left-0 right-0 z-10 bg-background/50 backdrop-blur-sm p-4 flex justify-between items-center">
-              <h2 className="text-lg font-semibold">Property Details</h2>
+            <div className="absolute top-0 left-0 right-0 z-10 bg-background/50 backdrop-blur-sm p-6 flex justify-between items-center border-b">
+              <h2 className="text-2xl font-semibold">Property Details</h2>
               <Button
                 variant="outline"
                 size="icon"
@@ -103,7 +109,7 @@ export function PropertyDetailsPopup() {
               </Button>
             </div>
 
-            <ScrollArea className="flex-grow mt-16 mb-20">
+            <ScrollArea className="flex-grow mt-24 mb-20">
               <div className="p-6 space-y-6">
                 <motion.div
                   layoutId={`property-image-${selectedPropertyId}`}
@@ -118,8 +124,7 @@ export function PropertyDetailsPopup() {
                   <Badge
                     variant="secondary"
                     className={cn(
-                      "absolute left-4 top-4 z-10 flex items-center gap-1",
-                      getSourceColor(property.source),
+                      "absolute left-4 top-4 z-10 flex items-center gap-2 px-3 py-1.5 text-sm backdrop-blur-md bg-black/20 border-none text-white shadow-sm",
                     )}
                   >
                     <Building className="w-3 h-3" />
@@ -144,7 +149,15 @@ export function PropertyDetailsPopup() {
                     ₹{property.price.toLocaleString()}
                   </motion.div>
                   <div className="flex gap-2">
-                    <Button variant="outline" size="icon" onClick={handleAddToCompare}>
+                    <Button 
+                      variant={isCompared ? "default" : "outline"} 
+                      size="icon" 
+                      onClick={handleToggleCompare}
+                      className={cn(
+                        "transition-colors",
+                        isCompared && "bg-primary text-primary-foreground"
+                      )}
+                    >
                       <Scale className="h-5 w-5" />
                     </Button>
                     <Button variant="outline" size="icon">
@@ -221,9 +234,9 @@ export function PropertyDetailsPopup() {
                     </Button>
                   </h2>
                   <ul className="grid grid-cols-2 gap-2 text-sm">
-                    {property.amenities?.map((amenity, index) => <li key={index}>• {amenity}</li>) || (
-                      <li>No amenities listed</li>
-                    )}
+                    {property.amenities?.map((amenity: string, index: number) => (
+                      <li key={index}>• {amenity}</li>
+                    )) || <li>No amenities listed</li>}
                   </ul>
                 </div>
 
@@ -275,9 +288,9 @@ export function PropertyDetailsPopup() {
                     </Button>
                   </h2>
                   <ul className="grid grid-cols-2 gap-2 text-sm">
-                    {property.nearbyPlaces?.map((place, index) => <li key={index}>• {place}</li>) || (
-                      <li>No nearby places listed</li>
-                    )}
+                    {property.nearbyPlaces?.map((place: string, index: number) => (
+                      <li key={index}>• {place}</li>
+                    )) || <li>No nearby places listed</li>}
                   </ul>
                 </div>
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -14,7 +14,11 @@ import {
 } from "@/components/ui/drawer"
 import { UserStorage, type User } from "@/lib/UserStorage"
 import { useRouter } from "next/navigation"
-import type React from "react" // Added import for React
+import type React from "react"
+import { useDispatch } from "react-redux"
+import { login } from "@/lib/redux/userSlice"
+import { toast } from "react-hot-toast"
+import { HelpCircle } from "lucide-react"
 
 interface AuthDrawerProps {
   isOpen: boolean
@@ -22,29 +26,48 @@ interface AuthDrawerProps {
 }
 
 export function AuthDrawer({ isOpen, onOpenChange }: AuthDrawerProps) {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const [username, setUsername] = useState("TheOneWhoForgotUsername")
+  const [password, setPassword] = useState("iLoveBricks123")
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const dispatch = useDispatch()
 
-  useEffect(() => {
-    const user = UserStorage.getUser()
-    if (user) {
-      setUsername(user.username)
-      setPassword(user.password)
-    }
-  }, [])
+  const handleForgotPassword = () => {
+    toast("Did you check under your welcome mat?", {
+      icon: "🔑",
+      duration: 4000,
+    })
+  }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const user: User = {
-      username,
-      password,
-      name: "John Doe",
-      mobileNumber: "+1234567890",
+    
+    if (!username || !password) {
+      toast.error("Please fill in all fields")
+      return
     }
-    UserStorage.saveUser(user)
-    onOpenChange(false)
-    router.push("/profile")
+
+    setIsLoading(true)
+    
+    try {
+      const user: User = {
+        username,
+        password,
+        name: "Property Enthusiast",
+        mobileNumber: "+1234567890",
+      }
+      
+      UserStorage.setUser(user)
+      dispatch(login(user))
+      toast.success("Successfully logged in!")
+      onOpenChange(false)
+      router.push("/profile")
+    } catch (error) {
+      toast.error("Failed to login. Please try again.")
+      console.error("Login error:", error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -56,15 +79,40 @@ export function AuthDrawer({ isOpen, onOpenChange }: AuthDrawerProps) {
             <DrawerDescription>Enter your credentials to access your account.</DrawerDescription>
           </DrawerHeader>
           <form onSubmit={handleSubmit} className="p-6 space-y-6 flex-grow">
-            <Input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-            <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button type="submit" className="w-full">
-              Login
+            <div className="space-y-2">
+              <Input 
+                type="text" 
+                placeholder="Username" 
+                value={username} 
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+              <p className="text-xs text-muted-foreground italic pl-1">Hint: anything would work here 🥷</p>
+            </div>
+            <div className="space-y-2">
+              <Input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <p className="text-xs text-muted-foreground italic pl-1">Hint: guess its too secure</p>
+            </div>
+            <div className="flex items-center justify-end">
+              <Button
+                variant="link"
+                size="sm"
+                className="text-muted-foreground hover:text-primary p-0 h-auto font-normal"
+                onClick={handleForgotPassword}
+                type="button"
+              >
+                <HelpCircle className="w-3 h-3 mr-1" />
+                Forgot Password?
+              </Button>
+            </div>
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? "Logging in..." : "Login"}
             </Button>
           </form>
           <DrawerFooter className="p-6 pt-0">

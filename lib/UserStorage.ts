@@ -6,19 +6,28 @@ export interface User {
 }
 
 export class UserStorage {
-  private static readonly USER_KEY = "propscanner_user"
+  private static readonly USER_KEY = "user"
 
-  static saveUser(user: User): void {
-    localStorage.setItem(this.USER_KEY, JSON.stringify(user))
+  private static isClient() {
+    return typeof window !== "undefined"
+  }
+
+  static setUser(user: User) {
+    if (this.isClient()) {
+      localStorage.setItem(this.USER_KEY, JSON.stringify(user))
+    }
   }
 
   static getUser(): User | null {
+    if (!this.isClient()) return null
     const userString = localStorage.getItem(this.USER_KEY)
     return userString ? JSON.parse(userString) : null
   }
 
-  static removeUser(): void {
-    localStorage.removeItem(this.USER_KEY)
+  static removeUser() {
+    if (this.isClient()) {
+      localStorage.removeItem(this.USER_KEY)
+    }
   }
 
   static isLoggedIn(): boolean {

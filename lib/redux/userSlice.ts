@@ -18,7 +18,7 @@ export const userSlice = createSlice({
     login: (state, action: PayloadAction<any>) => {
       state.isLoggedIn = true
       state.user = action.payload
-      UserStorage.saveUser(action.payload)
+      UserStorage.setUser(action.payload)
     },
     logout: (state) => {
       state.isLoggedIn = false
