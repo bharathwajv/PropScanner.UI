@@ -68,14 +68,15 @@ export function SearchDialog({
         onOpenChange(newOpen)
       }}
     >
-      <DialogContent className="sm:max-w-[425px] p-0 h-[90vh] max-h-[90vh] overflow-hidden flex flex-col">
-        <div className="p-6 flex-shrink-0">
+      <DialogContent className="sm:max-w-[425px] p-0 h-[90vh] max-h-[90vh] overflow-hidden flex flex-col gap-0">
+        <div className="p-6 flex-shrink-0 border-b">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-semibold">{mode === "alert" ? "Set Alert" : "Search Properties"}</h2>
-            {/*Removed DialogClose Button*/}
           </div>
           {page === 1 ? (
-            <PropertyTypeTabs value={propertyType} onValueChange={setPropertyType} />
+            <div className="relative after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-[1px] after:bg-border">
+              <PropertyTypeTabs value={propertyType} onValueChange={setPropertyType} />
+            </div>
           ) : (
             <div className="flex items-center space-x-2">
               <Button variant="ghost" size="icon" onClick={handleBack}>
@@ -85,7 +86,7 @@ export function SearchDialog({
             </div>
           )}
         </div>
-        <div className="flex-grow overflow-y-auto px-6">
+        <div className="flex-grow overflow-y-auto px-6 py-4">
           {page === 1 ? (
             <SearchBar onLocationSelect={handleLocationSelect} />
           ) : (

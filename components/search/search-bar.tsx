@@ -51,25 +51,25 @@ export function SearchBar({ onLocationSelect }: SearchBarProps) {
 
   return (
     <div className="relative" ref={inputRef}>
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+      <div className="relative rounded-md">
+        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
         <Input
           type="text"
           placeholder="Search location..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 pr-4"
+          className="pl-10 pr-4 w-full focus-visible:ring-2 focus-visible:ring-offset-0"
           onFocus={() => setShowSuggestions(true)}
         />
       </div>
       {showSuggestions && (
-        <div className="absolute z-10 w-full mt-1 bg-background border rounded-md shadow-lg">
+        <div className="absolute z-10 w-full mt-1 bg-background border rounded-md shadow-lg overflow-hidden">
           {suggestions.length > 0 ? (
             suggestions.map((suggestion, index) => (
               <Button
                 key={index}
                 variant="ghost"
-                className="w-full justify-start font-normal"
+                className="w-full justify-start font-normal hover:bg-muted"
                 onClick={() => onLocationSelect(suggestion)}
               >
                 {suggestion}
