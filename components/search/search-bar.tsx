@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Search } from "lucide-react"
+import { Search, ArrowUpRight } from "lucide-react"
 
 interface SearchBarProps {
   onLocationSelect: (location: string) => void
@@ -52,13 +52,13 @@ export function SearchBar({ onLocationSelect }: SearchBarProps) {
   return (
     <div className="relative" ref={inputRef}>
       <div className="relative rounded-md">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+        <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground pointer-events-none" />
         <Input
           type="text"
           placeholder="Search location..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 pr-4 w-full focus-visible:ring-2 focus-visible:ring-offset-0"
+          className="pl-10 pr-4 w-full focus-visible:ring-2 focus-visible:ring-offset-0 h-12 text-lg"
           onFocus={() => setShowSuggestions(true)}
         />
       </div>
@@ -69,14 +69,15 @@ export function SearchBar({ onLocationSelect }: SearchBarProps) {
               <Button
                 key={index}
                 variant="ghost"
-                className="w-full justify-start font-normal hover:bg-muted"
+                className="w-full justify-between px-4 py-6 font-normal hover:bg-muted text-base"
                 onClick={() => onLocationSelect(suggestion)}
               >
                 {suggestion}
+                <ArrowUpRight className="h-5 w-5 text-muted-foreground" />
               </Button>
             ))
           ) : (
-            <div className="p-2 text-sm text-muted-foreground">No suggestions found</div>
+            <div className="p-4 text-base text-muted-foreground">No suggestions found</div>
           )}
         </div>
       )}

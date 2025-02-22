@@ -88,7 +88,7 @@ export function PropertyDetailsPopup() {
             layoutId={`property-card-${selectedPropertyId}`}
             initial={{ borderRadius: 8, width: "100%", height: "100%" }}
             animate={{ borderRadius: 12 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.2, ease: "easeIn" }}
             className="bg-background rounded-lg shadow-lg overflow-hidden w-full h-full sm:h-[90vh] sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[60%] max-w-4xl relative flex flex-col"
           >
             <div className="absolute top-0 left-0 right-0 z-10 bg-background/50 backdrop-blur-sm p-4 flex justify-between items-center">

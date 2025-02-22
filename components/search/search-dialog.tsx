@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import { useDispatch } from "react-redux"
 import { setIsSearchOpen } from "@/lib/redux/uiSlice"
+import { DialogHeader } from "@/components/shared/dialog-header"
 
 interface SearchDialogProps {
   open: boolean
@@ -58,6 +59,11 @@ export function SearchDialog({
     setLocation(undefined)
   }
 
+  const handleClose = () => {
+    dispatch(setIsSearchOpen(false))
+    onOpenChange(false)
+  }
+
   return (
     <Dialog
       open={open}
@@ -68,11 +74,8 @@ export function SearchDialog({
         onOpenChange(newOpen)
       }}
     >
-      <DialogContent className="sm:max-w-[425px] p-0 h-[90vh] max-h-[90vh] overflow-hidden flex flex-col gap-0">
-        <div className="p-6 flex-shrink-0 border-b">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-semibold">{mode === "alert" ? "Set Alert" : "Search Properties"}</h2>
-          </div>
+      <DialogContent className="sm:max-w-[425px] p-0 h-[90vh] max-h-[90vh] overflow-hidden flex flex-col gap-0" hideCloseButton>
+        <DialogHeader title={mode === "alert" ? "Set Alert" : "Search Properties"} onClose={handleClose}>
           {page === 1 ? (
             <div className="relative after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-[1px] after:bg-border">
               <PropertyTypeTabs value={propertyType} onValueChange={setPropertyType} />
@@ -85,7 +88,7 @@ export function SearchDialog({
               <h3 className="text-lg font-semibold">{location}</h3>
             </div>
           )}
-        </div>
+        </DialogHeader>
         <div className="flex-grow overflow-y-auto px-6 py-4">
           {page === 1 ? (
             <SearchBar onLocationSelect={handleLocationSelect} />

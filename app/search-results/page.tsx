@@ -101,13 +101,18 @@ export default function SearchResultsPage() {
         initialLocation={searchLocation}
       />
 
+      <FilterDrawer 
+        open={isFilterOpen} 
+        onOpenChange={(open) => dispatch(setIsFilterOpen(open))}
+      />
+
       <PropertyDetailsPopup />
 
       <Button
         variant={isNotificationSet ? "destructive" : "outline"}
         className={cn(
-          "fixed bottom-20 right-4 rounded-full shadow-lg p-0",
-          "w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16",
+          "fixed bottom-20 right-4 rounded-full shadow-lg",
+          "w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24",
           isNotificationSet
             ? "bg-destructive hover:bg-destructive/90 text-destructive-foreground"
             : "bg-white hover:bg-white/90"
@@ -115,9 +120,9 @@ export default function SearchResultsPage() {
         onClick={handleToggleNotification}
       >
         {isNotificationSet ? (
-          <BellOff className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
+          <BellOff className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12" />
         ) : (
-          <Bell className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8" />
+          <Bell className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12" />
         )}
       </Button>
     </div>

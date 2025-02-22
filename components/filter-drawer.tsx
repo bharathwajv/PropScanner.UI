@@ -4,18 +4,17 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { DualSlider } from "@/components/ui/dual-slider"
-import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer"
+import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer"
 import { SlidersHorizontal } from "lucide-react"
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 
 interface FilterDrawerProps {
-  onFilter: () => void
-  isOpen: boolean
+  open: boolean
   onOpenChange: (open: boolean) => void
 }
 
-export function FilterDrawer({ onFilter, isOpen, onOpenChange }: FilterDrawerProps) {
+export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
   const [isSmallDevice, setIsSmallDevice] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -38,7 +37,6 @@ export function FilterDrawer({ onFilter, isOpen, onOpenChange }: FilterDrawerPro
   const handleApply = () => {
     setIsLoading(true)
     setTimeout(() => {
-      if (onFilter) onFilter()
       onOpenChange(false)
       setIsLoading(false)
     }, 1500)
@@ -62,12 +60,7 @@ export function FilterDrawer({ onFilter, isOpen, onOpenChange }: FilterDrawerPro
   )
 
   return (
-    <Drawer open={isOpen} onOpenChange={onOpenChange}>
-      <DrawerTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full">
-          <SlidersHorizontal className="h-6 w-6" />
-        </Button>
-      </DrawerTrigger>
+    <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className={isSmallDevice ? "h-[85vh]" : ""}>
         <div className="mx-auto w-full max-w-sm flex flex-col h-full">
           <DrawerHeader>
@@ -152,16 +145,12 @@ export function FilterDrawer({ onFilter, isOpen, onOpenChange }: FilterDrawerPro
                 <div className="space-y-6">
                   <DualSlider defaultValue={[175000, 300000]} max={300000} min={0} step={1000} className="mt-6" />
                   <div className="flex justify-between text-sm text-gray-600">
-                    <span>£175,000</span>
-                    <span>£300,000</span>
+                    <span>₹175,000</span>
+                    <span>₹300,000</span>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <Label className="text-lg font-medium">Location</Label>
-                <Input placeholder="Great Falls, Maryland" className="rounded-full bg-white border-gray-200" />
-              </div>
             </div>
           </div>
           <DrawerFooter className="px-4 py-6">

@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import type { RootState } from "@/lib/redux/store"
 import { ArrowLeft } from "lucide-react"
+import { PageHeader } from "@/components/shared/page-header"
 
 export default function NotificationsPage() {
   const router = useRouter()
@@ -26,15 +27,7 @@ export default function NotificationsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center">
-          <button onClick={() => router.back()} className="flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2">
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Go Back</span>
-          </button>
-          <h1 className="ml-4 text-xl font-semibold">Notifications</h1>
-        </div>
-      </header>
+        <PageHeader title="Notifications" />
       <div className="container mx-auto max-w-4xl px-4 py-8">
         <div className="space-y-4">
           {notificationAlerts.map((alert) => (
