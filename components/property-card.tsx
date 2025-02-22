@@ -116,29 +116,29 @@ export default function PropertyCard({
             />
             <Badge
               variant="secondary"
-              className={cn("absolute top-2 left-2 flex items-center gap-1", getSourceColor(source))}
+              className="absolute top-3 left-3 flex items-center gap-2 px-3 py-1.5 text-sm backdrop-blur-md bg-black/20 border-none text-white shadow-sm"
             >
-              <Building className="w-3 h-3" />
+              <Building className="w-4 h-4" />
               {source}
             </Badge>
             <div className="absolute bottom-2 right-2 flex gap-2">
               <button
                 className={cn(
-                  "p-2 rounded-full transition-colors bg-white/80 hover:bg-white",
+                  "p-3 rounded-full transition-colors bg-white/90 hover:bg-white shadow-sm",
                   isCompared ? "text-primary bg-white" : "text-secondary-foreground",
                 )}
                 onClick={handleToggleCompare}
               >
-                <Scale className="w-4 h-4" />
+                <Scale className="w-5 h-5" />
               </button>
               <button
                 className={cn(
-                  "p-2 rounded-full transition-colors bg-white/80 hover:bg-white",
+                  "p-3 rounded-full transition-colors bg-white/90 hover:bg-white shadow-sm",
                   isFavorite ? "text-primary bg-white" : "text-secondary-foreground",
                 )}
                 onClick={handleToggleFavorite}
               >
-                <Heart className="w-4 h-4" fill={isFavorite ? "currentColor" : "none"} />
+                <Heart className="w-5 h-5" fill={isFavorite ? "currentColor" : "none"} />
               </button>
             </div>
           </motion.div>
@@ -188,18 +188,5 @@ export default function PropertyCard({
       <PriceAlertsDialog open={showPriceAlertsInfo} onOpenChange={setShowPriceAlertsInfo} />
     </>
   )
-}
-
-const getSourceColor = (source: string) => {
-  switch (source.toLowerCase()) {
-    case "99acres":
-      return "bg-blue-500 text-white"
-    case "nobroker":
-      return "bg-red-500 text-white"
-    case "magicbricks":
-      return "bg-yellow-500 text-black"
-    default:
-      return "bg-gray-500 text-white"
-  }
 }
 

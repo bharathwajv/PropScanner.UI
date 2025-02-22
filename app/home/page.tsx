@@ -13,6 +13,7 @@ import { PropertyDetailsPopup } from "@/components/property-details-popup"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import PropertyCard from "@/components/property-card"
+import { Skeleton } from "@/components/ui/skeleton"
 
 interface SearchHistoryItem {
   id: string
@@ -25,21 +26,27 @@ export default function HomePage() {
   const dispatch = useDispatch()
   const { isSearchOpen } = useSelector((state: RootState) => state.ui)
   const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>([])
-  const [hasSearched, setHasSearched] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const properties = useSelector((state: RootState) => state.properties.items)
 
   useEffect(() => {
     dispatch(setShowHeaderAndNav(true))
-    try {
-      const storedHistory = localStorage.getItem("searchHistory")
-      if (storedHistory) {
-        const parsedHistory = JSON.parse(storedHistory)
-        setSearchHistory(parsedHistory)
-        setHasSearched(parsedHistory.length > 0)
+    const loadSearchHistory = async () => {
+      try {
+        const storedHistory = localStorage.getItem("searchHistory")
+        if (storedHistory) {
+          const parsedHistory = JSON.parse(storedHistory)
+          setSearchHistory(parsedHistory)
+        }
+      } catch (error) {
+        console.error("Error loading search history:", error)
+      } finally {
+        // Add a small delay to ensure smooth transition
+        await new Promise(resolve => setTimeout(resolve, 300))
+        setIsLoading(false)
       }
-    } catch (error) {
-      console.error("Error loading search history:", error)
     }
+    loadSearchHistory()
   }, [dispatch])
 
   const handleSearchClick = () => {
@@ -67,7 +74,6 @@ export default function HomePage() {
         updatedHistory = [newSearch, ...searchHistory].slice(0, 4)
       }
       setSearchHistory(updatedHistory)
-      setHasSearched(true)
       localStorage.setItem("searchHistory", JSON.stringify(updatedHistory))
     } catch (error) {
       console.error("Error updating search history:", error)
@@ -77,6 +83,32 @@ export default function HomePage() {
   const handleHistoryItemClick = (location: string) => {
     router.push(`/search-results?location=${encodeURIComponent(location)}`)
   }
+
+  const SearchHistorySkeleton = () => (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+    >
+      <h2 className="text-2xl font-bold">Recent Searches</h2>
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-4 mt-4">
+        {[1, 2, 3, 4].map((index) => (
+          <Card key={index} className="cursor-pointer">
+            <CardHeader className="p-4">
+              <div className="flex items-center">
+                <Skeleton className="w-4 h-4 rounded-full mr-2" />
+                <Skeleton className="h-5 w-[120px]" />
+              </div>
+            </CardHeader>
+            <CardContent className="p-4 pt-0">
+              <Skeleton className="h-4 w-[80px]" />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </motion.div>
+  )
 
   return (
     <div className="container py-4 md:py-8 space-y-8 max-w-7xl mx-auto">
@@ -99,41 +131,47 @@ export default function HomePage() {
 
       <div className="space-y-6">
         <AnimatePresence mode="wait">
-          {hasSearched ? (
-            <motion.div
-              key="search-history"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-            >
-              <h2 className="text-2xl font-bold">Recent Searches</h2>
-              <div className="grid gap-4 grid-cols-2 md:grid-cols-4 mt-4">
-                {searchHistory.map((item, index) => (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <Card
-                      className="cursor-pointer hover:shadow-md transition-shadow duration-300"
-                      onClick={() => handleHistoryItemClick(item.location)}
+          {searchHistory.length > 0 || isLoading ? (
+            isLoading ? (
+              <SearchHistorySkeleton />
+            ) : (
+              <motion.div
+                key="search-history"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <h2 className="text-2xl font-bold">Recent Searches</h2>
+                <div className="grid gap-4 grid-cols-2 md:grid-cols-4 mt-4">
+                  {searchHistory.map((item, index) => (
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: index * 0.1 }}
                     >
-                      <CardHeader className="p-4">
-                        <CardTitle className="flex items-center text-sm">
-                          <Clock className="w-4 h-4 mr-2 text-primary" />
-                          {item.location}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="p-4 pt-0">
-                        <p className="text-xs text-muted-foreground">{new Date(item.date).toLocaleDateString()}</p>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+                      <Card
+                        className="cursor-pointer hover:shadow-md transition-shadow duration-300"
+                        onClick={() => handleHistoryItemClick(item.location)}
+                      >
+                        <CardHeader className="p-4">
+                          <CardTitle className="flex items-center text-sm">
+                            <Clock className="w-4 h-4 mr-2 text-primary" />
+                            {item.location}
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-4 pt-0">
+                          <p className="text-xs text-muted-foreground">
+                            {new Date(item.date).toLocaleDateString()}
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )
           ) : (
             <motion.div
               key="app-info"
