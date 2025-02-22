@@ -1,57 +1,64 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useDispatch, useSelector } from "react-redux"
 import { setShowHeaderAndNav, setIsSearchOpen, setIsFilterOpen, setSelectedTab } from "@/lib/redux/uiSlice"
 import type { RootState } from "@/lib/redux/store"
 import { Input } from "@/components/ui/input"
 import PropertyCard from "@/components/property-card"
-import { Search, ArrowLeft, SlidersHorizontal } from "lucide-react"
+import { Search, ArrowLeft, SlidersHorizontal, Bell, BellOff } from "lucide-react"
 import { SearchDialog } from "@/components/search/search-dialog"
 import { Button } from "@/components/ui/button"
 import { FilterDrawer } from "@/components/filter-drawer"
 import { PropertyDetailsPopup } from "@/components/property-details-popup"
-import { LinearProgress } from "@/components/ui/linear-progress"
 import { NavTabs } from "@/components/nav-tabs"
+import { toast } from "react-hot-toast"
+import { addNotificationAlert, removeNotificationAlert } from "@/lib/redux/notificationsSlice"
+import { motion } from "framer-motion"
 
 export default function SearchResultsPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const dispatch = useDispatch()
   const { isSearchOpen, isFilterOpen, selectedTab } = useSelector((state: RootState) => state.ui)
-  const allProperties = useSelector((state: RootState) => state.properties.items)
-  const [properties, setProperties] = useState([])
-  const [searchLocation, setSearchLocation] = useState("")
-  const [isLoading, setIsLoading] = useState(true)
+  const properties = useSelector((state: RootState) => state.properties.items)
+  const notificationAlerts = useSelector((state: RootState) => state.notifications.alerts)
+  const searchLocation = searchParams.get("location") || ""
 
   const tabs = ["Nearby", "Recommend", "Upcoming"]
 
   useEffect(() => {
     dispatch(setShowHeaderAndNav(false))
-    const location = searchParams.get("location")
-    if (location) {
-      setSearchLocation(location)
-    }
-    loadProperties()
-  }, [dispatch, searchParams])
-
-  const loadProperties = async () => {
-    setIsLoading(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setProperties(allProperties)
-    setIsLoading(false)
-  }
+  }, [dispatch])
 
   const handleGoBack = () => {
     router.back()
   }
 
+  const isNotificationSet = notificationAlerts.some((alert) => alert.location === searchLocation)
+
+  const handleToggleNotification = () => {
+    if (isNotificationSet) {
+      const alert = notificationAlerts.find((alert) => alert.location === searchLocation)
+      if (alert) {
+        dispatch(removeNotificationAlert(alert.id))
+        toast.success("Notification alert removed")
+      }
+    } else {
+      if (notificationAlerts.length >= 2) {
+        toast.error("You can only set up to 2 notification alerts")
+        return
+      }
+      dispatch(addNotificationAlert({ location: searchLocation, filters: selectedTab }))
+      toast.success("Notification alert set for this search")
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="container mx-auto px-4 py-4 space-y-6">
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center">
+        <div className="flex h-14 items-center">
           <button onClick={handleGoBack} className="flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2">
             <ArrowLeft className="h-5 w-5" />
             <span className="text-sm font-medium">Go Back</span>
@@ -60,56 +67,64 @@ export default function SearchResultsPage() {
         </div>
       </header>
 
-      {isLoading && <LinearProgress />}
-
-      <div className="container py-4 space-y-6">
-        <div className="flex gap-2">
-          <div className="relative cursor-pointer flex-grow" onClick={() => dispatch(setIsSearchOpen(true))}>
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              placeholder="Find Your New apartment, House, lands and more"
-              value={searchLocation}
-              className="pl-10 pr-4 bg-muted cursor-pointer"
-              readOnly
-            />
-          </div>
-          <Button
-            variant="outline"
-            size="icon"
-            className="rounded-lg border-2"
-            onClick={() => dispatch(setIsFilterOpen(true))}
-          >
-            <SlidersHorizontal className="h-4 w-4" />
-          </Button>
+      <div className="flex gap-2">
+        <div className="relative cursor-pointer flex-grow" onClick={() => dispatch(setIsSearchOpen(true))}>
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Find Your New apartment, House, lands and more"
+            value={searchLocation}
+            className="pl-10 pr-4 bg-muted cursor-pointer"
+            readOnly
+          />
         </div>
-
-        <div className="flex justify-center">
-          <NavTabs tabs={tabs} selected={selectedTab} onSelect={(tab) => dispatch(setSelectedTab(tab))} />
-        </div>
-
-        <SearchDialog
-          open={isSearchOpen}
-          onOpenChange={(open) => dispatch(setIsSearchOpen(open))}
-          initialLocation={searchLocation}
-        />
-
-        <FilterDrawer
-          isOpen={isFilterOpen}
-          onOpenChange={(open) => dispatch(setIsFilterOpen(open))}
-          onFilter={() => {
-            // Implement filter logic here
-          }}
-        />
-
-        <div className="space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {properties.map((property) => (
-              <PropertyCard key={property.id} {...property} />
-            ))}
-          </div>
-        </div>
+        <Button
+          variant="outline"
+          size="icon"
+          className="rounded-lg border-2"
+          onClick={() => dispatch(setIsFilterOpen(true))}
+        >
+          <SlidersHorizontal className="h-4 w-4" />
+        </Button>
       </div>
+
+      <div className="flex justify-center">
+        <NavTabs tabs={tabs} selected={selectedTab} onSelect={(tab) => dispatch(setSelectedTab(tab))} />
+      </div>
+
+      <SearchDialog
+        open={isSearchOpen}
+        onOpenChange={(open) => dispatch(setIsSearchOpen(open))}
+        initialLocation={searchLocation}
+      />
+
+      <FilterDrawer isOpen={isFilterOpen} onOpenChange={(open) => dispatch(setIsFilterOpen(open))} />
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {properties.map((property, index) => (
+          <motion.div
+            key={property.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.05 }}
+          >
+            <PropertyCard {...property} />
+          </motion.div>
+        ))}
+      </div>
+
       <PropertyDetailsPopup />
+
+      <Button
+        variant={isNotificationSet ? "destructive" : "outline"}
+        className={`fixed bottom-20 right-4 w-14 h-14 rounded-full shadow-lg p-0 ${
+          isNotificationSet
+            ? "bg-destructive hover:bg-destructive/90 text-destructive-foreground"
+            : "bg-white hover:bg-white/90"
+        }`}
+        onClick={handleToggleNotification}
+      >
+        {isNotificationSet ? <BellOff className="h-8 w-8" /> : <Bell className="h-8 w-8" />}
+      </Button>
     </div>
   )
 }

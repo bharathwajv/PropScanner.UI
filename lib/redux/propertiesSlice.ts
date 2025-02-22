@@ -11,6 +11,9 @@ interface Property {
     area: string
   }
   has360Tour: boolean
+  source: string
+  location: string
+  type: string
 }
 
 interface PropertiesState {
@@ -28,6 +31,9 @@ const initialState: PropertiesState = {
       price: 1680,
       specs: { beds: 4, baths: 2, area: "1453m²" },
       has360Tour: true,
+      source: "99acres",
+      location: "Toronto, ON",
+      type: "House",
     },
     {
       id: "lakeshore-2",
@@ -36,6 +42,9 @@ const initialState: PropertiesState = {
       price: 1460,
       specs: { beds: 3, baths: 2, area: "1280m²" },
       has360Tour: false,
+      source: "nobroker",
+      location: "Vancouver, BC",
+      type: "Apartment",
     },
     {
       id: "lakeshore-3",
@@ -45,6 +54,9 @@ const initialState: PropertiesState = {
       price: 1890,
       specs: { beds: 5, baths: 3, area: "1680m²" },
       has360Tour: true,
+      source: "magicbricks",
+      location: "Montreal, QC",
+      type: "Condo",
     },
   ],
   pinnedFields: [],

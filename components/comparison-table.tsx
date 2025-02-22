@@ -1,14 +1,16 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+"use client"
+
+import { Table, TableBody, TableCell, TableHead, TableRow, TableHeader } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { X, ChevronRight, ChevronLeft, Pin, PinOff } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux"
 import { removeFromCompare } from "@/lib/redux/compareSlice"
+import { setSelectedPropertyId, setPropertyDetailsOpen } from "@/lib/redux/uiSlice"
 import { pinField, unpinField } from "@/lib/redux/propertiesSlice"
 import type { RootState } from "@/lib/redux/store"
 import Image from "next/image"
 import { useState, useEffect } from "react"
-import { cn } from "@/lib/utils"
-import { useState as useState2 } from "react"
+import { propertyFeatures, getPropertyValue } from "@/lib/propertyFeatures"
 
 interface Property {
   id: string
@@ -76,30 +78,17 @@ export function ComparisonTable({ properties }: ComparisonTableProps) {
   const handlePinRow = (key: string) => {
     setPinnedRows((prev) => {
       const newPinnedRows = prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
-      // Force a re-render by updating a state
       setActiveIndex((prevIndex) => prevIndex)
       return newPinnedRows
     })
   }
 
-  const features = [
-    { name: "Price", key: "price" },
-    { name: "Type", key: "type" },
-    { name: "Bedrooms", key: "specs.beds" },
-    { name: "Bathrooms", key: "specs.baths" },
-    { name: "Area", key: "specs.area" },
-    { name: "Location", key: "location" },
-    { name: "Year Built", key: "yearBuilt" },
-    { name: "Floors", key: "floors" },
-    { name: "Parking", key: "parking" },
-    { name: "Amenities", key: "amenities" },
-    { name: "Nearby Places", key: "nearbyPlaces" },
-    { name: "Energy Rating", key: "energyRating" },
-    { name: "Taxes per Year", key: "taxesPerYear" },
-    { name: "Description", key: "description" },
-  ]
+  const handleImageClick = (id: string) => {
+    dispatch(setSelectedPropertyId(id))
+    dispatch(setPropertyDetailsOpen(true))
+  }
 
-  const sortedFeatures = [...features].sort((a, b) => {
+  const sortedFeatures = [...propertyFeatures].sort((a, b) => {
     if (pinnedRows.includes(a.key) && !pinnedRows.includes(b.key)) return -1
     if (!pinnedRows.includes(a.key) && pinnedRows.includes(b.key)) return 1
     if (pinnedFields.includes(a.key) && !pinnedFields.includes(b.key)) return -1
@@ -109,14 +98,6 @@ export function ComparisonTable({ properties }: ComparisonTableProps) {
 
   if (properties.length === 0) {
     return <div>No properties to compare</div>
-  }
-
-  const getPropertyValue = (property: Property, key: string) => {
-    if (key.includes(".")) {
-      const [obj, prop] = key.split(".")
-      return property[obj]?.[prop] ?? "N/A"
-    }
-    return property[key] ?? "N/A"
   }
 
   return (
@@ -161,7 +142,7 @@ export function ComparisonTable({ properties }: ComparisonTableProps) {
                             }}
                           >
                             {pinnedRows.includes(feature.key) || pinnedFields.includes(feature.key) ? (
-                              <PinOff className="h-4 w-4" />
+                              <PinOff className="h-4 w-4 text-red-500" />
                             ) : (
                               <Pin className="h-4 w-4" />
                             )}
@@ -192,15 +173,17 @@ export function ComparisonTable({ properties }: ComparisonTableProps) {
               <TableHead className="w-[200px]">Feature</TableHead>
               {properties.map((property) => (
                 <TableHead key={property.id} className="text-center">
-                  {property.title}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="ml-2 rounded-full border-2 border-red-500 p-0 w-6 h-6"
-                    onClick={() => handleRemove(property.id)}
-                  >
-                    <X className="h-4 w-4 text-red-500" />
-                  </Button>
+                  <div className="flex flex-col items-center">
+                    <span className="font-semibold">{property.title}</span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="mt-1 rounded-full border-2 border-red-500 p-0 w-6 h-6"
+                      onClick={() => handleRemove(property.id)}
+                    >
+                      <X className="h-4 w-4 text-red-500" />
+                    </Button>
+                  </div>
                 </TableHead>
               ))}
             </TableRow>
@@ -210,7 +193,10 @@ export function ComparisonTable({ properties }: ComparisonTableProps) {
               <TableCell className="font-medium">Image</TableCell>
               {properties.map((property) => (
                 <TableCell key={property.id} className="text-center">
-                  <div className="relative w-32 h-24 mx-auto">
+                  <div
+                    className="relative w-32 h-24 mx-auto cursor-pointer"
+                    onClick={() => handleImageClick(property.id)}
+                  >
                     <Image
                       src={property.image || "/placeholder.svg"}
                       alt={property.title}
@@ -238,7 +224,7 @@ export function ComparisonTable({ properties }: ComparisonTableProps) {
                       }}
                     >
                       {pinnedRows.includes(feature.key) || pinnedFields.includes(feature.key) ? (
-                        <PinOff className="h-4 w-4" />
+                        <PinOff className="h-4 w-4 text-red-500" />
                       ) : (
                         <Pin className="h-4 w-4" />
                       )}

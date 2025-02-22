@@ -17,11 +17,12 @@ export function NavTabs({ tabs, selected, onSelect }: NavTabsProps) {
           onClick={() => onSelect(tab)}
           className={cn(
             "relative px-6 py-2 text-sm transition-colors rounded-full",
-            selected === tab
-              ? "bg-primary text-primary-foreground font-medium"
-              : "text-muted-foreground hover:text-foreground",
+            selected === tab ? "text-foreground font-medium" : "text-muted-foreground hover:text-foreground",
           )}
         >
+          {selected === tab && (
+            <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-green-500" />
+          )}
           {tab}
         </button>
       ))}

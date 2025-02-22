@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,12 +11,12 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-import { Search } from 'lucide-react'
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '@/lib/redux/store'
-import { setSearchQuery } from '@/lib/redux/uiSlice'
-import { useRouter } from 'next/navigation'
+import { Search } from "lucide-react"
+import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import type { RootState } from "@/lib/redux/store"
+import { setSearchQuery } from "@/lib/redux/uiSlice"
+import { useRouter } from "next/navigation"
 
 interface SearchDrawerProps {
   onSearch: (query: string) => void
@@ -36,9 +36,9 @@ export function SearchDrawer({ onSearch, isOpen, onOpenChange }: SearchDrawerPro
     }
 
     checkScreenSize()
-    window.addEventListener('resize', checkScreenSize)
+    window.addEventListener("resize", checkScreenSize)
 
-    return () => window.removeEventListener('resize', checkScreenSize)
+    return () => window.removeEventListener("resize", checkScreenSize)
   }, [])
 
   const handleSearch = () => {
@@ -54,7 +54,7 @@ export function SearchDrawer({ onSearch, isOpen, onOpenChange }: SearchDrawerPro
           <Search className="h-6 w-6" />
         </Button>
       </DrawerTrigger>
-      <DrawerContent className={isSmallDevice ? 'h-[80vh]' : ''}>
+      <DrawerContent className={isSmallDevice ? "h-[80vh]" : ""}>
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
             <DrawerTitle>Search Properties</DrawerTitle>

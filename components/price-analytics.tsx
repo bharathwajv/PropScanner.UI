@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 
 const data = [
-  { month: 'Jan', price: 2400 },
-  { month: 'Feb', price: 2500 },
-  { month: 'Mar', price: 2600 },
-  { month: 'Apr', price: 2400 },
-  { month: 'May', price: 2700 },
-  { month: 'Jun', price: 2900 },
+  { month: "Jan", price: 2400 },
+  { month: "Feb", price: 2500 },
+  { month: "Mar", price: 2600 },
+  { month: "Apr", price: 2400 },
+  { month: "May", price: 2700 },
+  { month: "Jun", price: 2900 },
 ]
 
 export function PriceAnalytics() {
-  const [location, setLocation] = useState('New York')
+  const [location, setLocation] = useState("New York")
 
   return (
     <Card>

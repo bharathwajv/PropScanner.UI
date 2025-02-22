@@ -7,7 +7,7 @@ import { SideNav } from "./side-nav"
 import { useSelector } from "react-redux"
 import type { RootState } from "@/lib/redux/store"
 import Link from "next/link"
-import { Bell, User } from "lucide-react"
+import { Bell } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { AuthDrawer } from "./auth-drawer"
 import { UserStorage } from "@/lib/UserStorage"
@@ -40,7 +40,12 @@ export function Layout({ children }: LayoutProps) {
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="container flex h-14 items-center">
             <div className="flex w-full justify-between items-center gap-4">
-              <div className="font-bold text-xl bg-secondary px-4 py-1.5 rounded-full">PropScan</div>
+              <Link
+                href="/"
+                className="font-bold text-xl bg-secondary px-4 py-1.5 rounded-full hover:bg-secondary/80 transition-colors"
+              >
+                PropScan
+              </Link>
               <div className="flex items-center gap-4">
                 <Link href="/notifications">
                   <Bell className="w-5 h-5" />

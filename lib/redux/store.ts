@@ -1,9 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit'
-import favoritesReducer from './favoritesSlice'
-import uiReducer from './uiSlice'
-import propertiesReducer from './propertiesSlice'
-import compareReducer from './compareSlice'
-import userReducer from './userSlice'
+import { configureStore } from "@reduxjs/toolkit"
+import favoritesReducer from "./favoritesSlice"
+import uiReducer from "./uiSlice"
+import propertiesReducer from "./propertiesSlice"
+import compareReducer from "./compareSlice"
+import userReducer from "./userSlice"
+import notificationsReducer from "./notificationsSlice"
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     properties: propertiesReducer,
     compare: compareReducer,
     user: userReducer,
+    notifications: notificationsReducer,
   },
 })
 

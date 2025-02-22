@@ -6,13 +6,21 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { Building2, Home, Hotel, MapPin, Building, Star } from "lucide-react"
+import { useState, useEffect } from "react"
+import { cn } from "@/lib/utils"
 
 interface PropertyFiltersProps {
   location?: string
   onLocationChange: (location: string) => void
+  onFiltersChange?: (filters: string) => void
 }
 
-export function PropertyFilters({ location, onLocationChange }: PropertyFiltersProps) {
+export function PropertyFilters({ location, onLocationChange, onFiltersChange }: PropertyFiltersProps) {
+  const [selectedPropertyType, setSelectedPropertyType] = useState<string | null>(null)
+  const [selectedBedrooms, setSelectedBedrooms] = useState<string | null>(null)
+  const [minPrice, setMinPrice] = useState<string>("")
+  const [maxPrice, setMaxPrice] = useState<string>("")
+
   const propertyTypes = [
     { icon: Building2, label: "Flat/Apartment" },
     { icon: Home, label: "House/Villa" },
@@ -24,12 +32,26 @@ export function PropertyFilters({ location, onLocationChange }: PropertyFiltersP
 
   const bedrooms = ["1 RK/1 BHK", "2 BHK", "3 BHK", "4 BHK", "4+ BHK"]
 
+  useEffect(() => {
+    if (onFiltersChange) {
+      const filters = [
+        selectedPropertyType,
+        selectedBedrooms,
+        minPrice && `Min ₹${minPrice}`,
+        maxPrice && `Max ₹${maxPrice}`,
+      ]
+        .filter(Boolean)
+        .join(", ")
+      onFiltersChange(filters)
+    }
+  }, [selectedPropertyType, selectedBedrooms, minPrice, maxPrice, onFiltersChange])
+
   return (
     <div className="space-y-6">
       <div className="space-y-2">
         <Label>Budget Range</Label>
         <div className="grid grid-cols-2 gap-4">
-          <Select>
+          <Select onValueChange={setMinPrice}>
             <SelectTrigger>
               <SelectValue placeholder="Min Price" />
             </SelectTrigger>
@@ -39,7 +61,7 @@ export function PropertyFilters({ location, onLocationChange }: PropertyFiltersP
               <SelectItem value="20l">₹20 Lakhs</SelectItem>
             </SelectContent>
           </Select>
-          <Select>
+          <Select onValueChange={setMaxPrice}>
             <SelectTrigger>
               <SelectValue placeholder="Max Price" />
             </SelectTrigger>
@@ -58,7 +80,14 @@ export function PropertyFilters({ location, onLocationChange }: PropertyFiltersP
         <Label>Property Type</Label>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {propertyTypes.map(({ icon: Icon, label }) => (
-            <Card key={label} className="p-4 cursor-pointer hover:border-primary transition-colors">
+            <Card
+              key={label}
+              className={cn(
+                "p-4 cursor-pointer hover:border-primary transition-colors",
+                selectedPropertyType === label ? "border-primary bg-primary/10" : "",
+              )}
+              onClick={() => setSelectedPropertyType(label)}
+            >
               <div className="flex items-center gap-3">
                 <Icon className="w-5 h-5" />
                 <span className="text-sm">{label}</span>
@@ -74,7 +103,12 @@ export function PropertyFilters({ location, onLocationChange }: PropertyFiltersP
         <Label>Bedrooms</Label>
         <div className="flex flex-wrap gap-2">
           {bedrooms.map((bedroom) => (
-            <Button key={bedroom} variant="outline" className="rounded-full">
+            <Button
+              key={bedroom}
+              variant={selectedBedrooms === bedroom ? "default" : "outline"}
+              className="rounded-full"
+              onClick={() => setSelectedBedrooms(bedroom)}
+            >
               {bedroom}
             </Button>
           ))}

@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+"use client"
+
+import { useEffect, useState } from "react"
 
 export function LinearProgress() {
   const [progress, setProgress] = useState(0)
@@ -22,10 +24,7 @@ export function LinearProgress() {
 
   return (
     <div className="w-full bg-gray-200 h-1">
-      <div
-        className="bg-primary h-1 transition-all duration-200 ease-out"
-        style={{ width: `${progress}%` }}
-      />
+      <div className="bg-primary h-1 transition-all duration-200 ease-out" style={{ width: `${progress}%` }} />
     </div>
   )
 }

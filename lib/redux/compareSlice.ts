@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 interface CompareState {
   ids: string[]
@@ -9,7 +9,7 @@ const initialState: CompareState = {
 }
 
 export const compareSlice = createSlice({
-  name: 'compare',
+  name: "compare",
   initialState,
   reducers: {
     addToCompare: (state, action: PayloadAction<string>) => {
@@ -18,7 +18,7 @@ export const compareSlice = createSlice({
       }
     },
     removeFromCompare: (state, action: PayloadAction<string>) => {
-      state.ids = state.ids.filter(id => id !== action.payload)
+      state.ids = state.ids.filter((id) => id !== action.payload)
     },
     clearCompare: (state) => {
       state.ids = []

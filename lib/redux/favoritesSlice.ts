@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 interface FavoritesState {
   ids: string[]
@@ -9,7 +9,7 @@ const initialState: FavoritesState = {
 }
 
 export const favoritesSlice = createSlice({
-  name: 'favorites',
+  name: "favorites",
   initialState,
   reducers: {
     toggleFavorite: (state, action: PayloadAction<string>) => {

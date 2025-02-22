@@ -10,7 +10,7 @@ export default function FilterPage() {
       <div className="container py-4">
         <div className="bg-white rounded-t-xl p-6 space-y-6">
           <h2 className="text-xl font-semibold mb-4">Filter</h2>
-          
+
           <div className="space-y-4">
             <div>
               <h3 className="font-medium mb-2">House Type</h3>
@@ -42,12 +42,7 @@ export default function FilterPage() {
             <div>
               <h3 className="font-medium mb-2">Price</h3>
               <div className="space-y-4">
-                <Slider
-                  defaultValue={[175000]}
-                  max={300000}
-                  min={0}
-                  step={1000}
-                />
+                <Slider defaultValue={[175000]} max={300000} min={0} step={1000} />
                 <div className="flex justify-between text-sm">
                   <span>£175,000</span>
                   <span>£300,000</span>
@@ -62,7 +57,9 @@ export default function FilterPage() {
           </div>
 
           <div className="flex gap-4 pt-4">
-            <Button variant="outline" className="flex-1">Reset</Button>
+            <Button variant="outline" className="flex-1">
+              Reset
+            </Button>
             <Button className="flex-1">Apply</Button>
           </div>
         </div>

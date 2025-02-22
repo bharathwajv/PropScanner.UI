@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { Card } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { UserStorage } from '@/lib/UserStorage'
+import { UserStorage } from "@/lib/UserStorage"
 
 export default function UserPage() {
   const router = useRouter()
@@ -14,7 +14,7 @@ export default function UserPage() {
   useEffect(() => {
     const currentUser = UserStorage.getUser()
     if (!currentUser) {
-      router.push('/')
+      router.push("/")
     } else {
       setUser(currentUser)
     }
@@ -22,7 +22,7 @@ export default function UserPage() {
 
   const handleLogout = () => {
     UserStorage.removeUser()
-    router.push('/')
+    router.push("/")
   }
 
   if (!user) {
@@ -49,7 +49,9 @@ export default function UserPage() {
           </div>
           {/* Add more user details here as needed */}
         </div>
-        <Button className="mt-6 w-full" onClick={handleLogout}>Logout</Button>
+        <Button className="mt-6 w-full" onClick={handleLogout}>
+          Logout
+        </Button>
       </Card>
     </div>
   )

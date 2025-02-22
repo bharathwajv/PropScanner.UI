@@ -1,4 +1,4 @@
-"use client"
+"\"use client"
 
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "@/lib/redux/store"
@@ -19,7 +19,6 @@ import {
   ExternalLink,
   Pin,
   PinOff,
-  Building,
 } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
@@ -28,9 +27,8 @@ import { toggleFavorite } from "@/lib/redux/favoritesSlice"
 import { addToCompare } from "@/lib/redux/compareSlice"
 import { toast } from "react-hot-toast"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { cn } from "@/lib/utils"
 
-export function PropertyDetailsPopup() {
+export default function PropertyDetailsPopup() {
   const dispatch = useDispatch()
   const { isPropertyDetailsOpen, selectedPropertyId } = useSelector((state: RootState) => state.ui)
   const property = useSelector((state: RootState) => state.properties.items.find((p) => p.id === selectedPropertyId))
@@ -57,14 +55,8 @@ export function PropertyDetailsPopup() {
     }
   }
 
-  const handleOpenSource = () => {
-    const sourceUrls = {
-      "99acres": "https://www.99acres.com",
-      nobroker: "https://www.nobroker.in",
-      magicbricks: "https://www.magicbricks.com",
-    }
-    const url = sourceUrls[property.source as keyof typeof sourceUrls] || "https://www.99acres.com"
-    window.open(url, "_blank")
+  const handleOpen99Acres = () => {
+    window.open("https://www.99acres.com", "_blank")
   }
 
   const handlePinField = (field: string) => {
@@ -115,16 +107,14 @@ export function PropertyDetailsPopup() {
                     fill
                     className="object-cover rounded-lg"
                   />
-                  <Badge
-                    variant="secondary"
-                    className={cn(
-                      "absolute left-4 top-4 z-10 flex items-center gap-1",
-                      getSourceColor(property.source),
-                    )}
-                  >
-                    <Building className="w-3 h-3" />
-                    {property.source}
-                  </Badge>
+                  {property.has360Tour && (
+                    <Badge
+                      variant="secondary"
+                      className="absolute left-4 top-4 z-10 bg-primary text-primary-foreground"
+                    >
+                      360° Tour
+                    </Badge>
+                  )}
                 </motion.div>
 
                 <div>
@@ -330,9 +320,9 @@ export function PropertyDetailsPopup() {
             </ScrollArea>
 
             <div className="absolute bottom-0 left-0 right-0 bg-background/50 backdrop-blur-sm p-4 flex gap-4">
-              <Button variant="outline" className="flex-1" onClick={handleOpenSource}>
+              <Button variant="outline" className="flex-1" onClick={handleOpen99Acres}>
                 <ExternalLink className="w-4 h-4 mr-2" />
-                Open {property.source}
+                Open 99Acres
               </Button>
               <Button className="flex-1 bg-primary hover:bg-primary/90">Book a Call</Button>
             </div>
@@ -341,18 +331,5 @@ export function PropertyDetailsPopup() {
       )}
     </AnimatePresence>
   )
-}
-
-const getSourceColor = (source: string) => {
-  switch (source.toLowerCase()) {
-    case "99acres":
-      return "bg-blue-500 text-white"
-    case "nobroker":
-      return "bg-red-500 text-white"
-    case "magicbricks":
-      return "bg-yellow-500 text-black"
-    default:
-      return "bg-gray-500 text-white"
-  }
 }
 

@@ -1,21 +1,11 @@
-'use client'
+"use client"
 
 import * as React from "react"
-import { Check, ChevronsUpDown, MapPin } from 'lucide-react'
+import { Check, ChevronsUpDown, MapPin } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
 const locations = [
   { value: "gst", label: "GST Road, Chennai" },
@@ -36,15 +26,8 @@ export function LocationCombobox({ value, onChange }: LocationComboboxProps) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-full justify-between"
-        >
-          {value
-            ? locations.find((location) => location.value === value)?.label
-            : "Search location..."}
+        <Button variant="outline" role="combobox" aria-expanded={open} className="w-full justify-between">
+          {value ? locations.find((location) => location.value === value)?.label : "Search location..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -74,12 +57,7 @@ export function LocationCombobox({ value, onChange }: LocationComboboxProps) {
                   setOpen(false)
                 }}
               >
-                <Check
-                  className={cn(
-                    "mr-2 h-4 w-4",
-                    value === location.value ? "opacity-100" : "opacity-0"
-                  )}
-                />
+                <Check className={cn("mr-2 h-4 w-4", value === location.value ? "opacity-100" : "opacity-0")} />
                 {location.label}
               </CommandItem>
             ))}

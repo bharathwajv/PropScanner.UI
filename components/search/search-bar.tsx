@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
 import { useState, useEffect, useRef } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Search } from 'lucide-react'
+import { Search } from "lucide-react"
 
 interface SearchBarProps {
   onLocationSelect: (location: string) => void
@@ -20,13 +20,13 @@ export function SearchBar({ onLocationSelect }: SearchBarProps) {
     "ECR, Chennai",
     "OMR, Chennai",
     "Tambaram, Chennai",
-    "Sithalapakkam, Chennai"
+    "Sithalapakkam, Chennai",
   ]
 
   useEffect(() => {
     if (searchTerm) {
-      const filteredSuggestions = popularLocations.filter(location =>
-        location.toLowerCase().includes(searchTerm.toLowerCase())
+      const filteredSuggestions = popularLocations.filter((location) =>
+        location.toLowerCase().includes(searchTerm.toLowerCase()),
       )
       setSuggestions(filteredSuggestions)
       setShowSuggestions(true)

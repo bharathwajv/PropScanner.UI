@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { UserStorage } from '@/lib/UserStorage'
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
+import { UserStorage } from "@/lib/UserStorage"
 
 interface UserState {
   isLoggedIn: boolean
@@ -12,7 +12,7 @@ const initialState: UserState = {
 }
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     login: (state, action: PayloadAction<any>) => {
