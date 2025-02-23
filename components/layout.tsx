@@ -42,7 +42,7 @@ export function Layout({ children }: LayoutProps) {
             <div className="flex w-full justify-between items-center gap-4">
               <Link
                 href="/"
-                className="font-bold text-xl bg-secondary px-4 py-1.5 rounded-full hover:bg-secondary/80 transition-colors"
+                className="font-bold text-xl border-2 border-gray-200 px-4 py-1.5 rounded-full hover:bg-black/5 transition-colors tracking-wider"
               >
                 PropScan
               </Link>

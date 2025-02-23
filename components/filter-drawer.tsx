@@ -162,7 +162,10 @@ export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
               >
                 Reset
               </Button>
-              <Button className="flex-1 rounded-full bg-gray-900 hover:bg-gray-800" onClick={handleApply}>
+              <Button 
+                className="flex-1 rounded-full bg-[#1c1c1c] hover:bg-[#2c2c2c]" 
+                onClick={handleApply}
+              >
                 Apply
               </Button>
             </div>
