@@ -28,7 +28,7 @@ export function Layout({ children }: LayoutProps) {
 
   const handleProfileClick = () => {
     if (isLoggedIn) {
-      router.push("/user")
+      router.push("/profile")
     } else {
       setIsAuthDrawerOpen(true)
     }

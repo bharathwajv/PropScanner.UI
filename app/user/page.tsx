@@ -1,5 +1,5 @@
 "use client"
-
+//remove this page - not in  use
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Card } from "@/components/ui/card"
