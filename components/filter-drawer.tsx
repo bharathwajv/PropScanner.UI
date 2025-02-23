@@ -104,25 +104,25 @@ export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
               </div>
 
               <div className="space-y-4">
-                <Label className="text-lg font-medium">Size (M²)</Label>
+                <Label className="text-lg font-medium">Size (sq.ft.)</Label>
                 <div className="overflow-x-auto whitespace-nowrap no-scrollbar flex gap-2 -mx-4 px-4">
                   <FilterButton
                     value="100"
-                    label="Up to 100"
-                    selected={selectedSize === "100"}
-                    onClick={() => setSelectedSize("100")}
+                    label="Up to 1000"
+                    selected={selectedSize === "1000"}
+                    onClick={() => setSelectedSize("1000")}
                   />
                   <FilterButton
-                    value="160"
-                    label="Up to 160"
-                    selected={selectedSize === "160"}
-                    onClick={() => setSelectedSize("160")}
+                    value="2400"
+                    label="Up to 2400"
+                    selected={selectedSize === "2400"}
+                    onClick={() => setSelectedSize("2400")}
                   />
                   <FilterButton
-                    value="220"
-                    label="Up to 220"
-                    selected={selectedSize === "220"}
-                    onClick={() => setSelectedSize("220")}
+                    value="15000"
+                    label="Up to 15000"
+                    selected={selectedSize === "15000"}
+                    onClick={() => setSelectedSize("15000")}
                   />
                 </div>
               </div>
@@ -130,10 +130,10 @@ export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
               <div className="space-y-4">
                 <Label className="text-lg font-medium">Price</Label>
                 <div className="space-y-6">
-                  <DualSlider defaultValue={[175000, 300000]} max={300000} min={0} step={1000} className="mt-6" />
+                  <DualSlider defaultValue={[175000, 1000000]} max={3000000} min={0} step={1000} className="mt-6" />
                   <div className="flex justify-between text-sm text-gray-600">
-                    <span>₹175,000</span>
-                    <span>₹300,000</span>
+                    <span>₹1,75,000</span>
+                    <span>₹30,00,000</span>
                   </div>
                 </div>
               </div>

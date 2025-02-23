@@ -31,11 +31,11 @@ export default function FilterPage() {
             </div>
 
             <div>
-              <h3 className="font-medium mb-2">Size (M²)</h3>
-              <ToggleGroup type="single" defaultValue="100">
-                <ToggleGroupItem value="100">Up to 100</ToggleGroupItem>
-                <ToggleGroupItem value="160">Up to 160</ToggleGroupItem>
-                <ToggleGroupItem value="220">Up to 220</ToggleGroupItem>
+              <h3 className="font-medium mb-2">Size (sq.ft.)</h3>
+              <ToggleGroup type="single" defaultValue="200">
+                <ToggleGroupItem value="100">Up to 1000</ToggleGroupItem>
+                <ToggleGroupItem value="160">Up to 2400</ToggleGroupItem>
+                <ToggleGroupItem value="220">Up to 50000</ToggleGroupItem>
               </ToggleGroup>
             </div>
 
