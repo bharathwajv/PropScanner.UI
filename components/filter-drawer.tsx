@@ -57,8 +57,8 @@ export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
             <div className="space-y-8">
               <div className="space-y-4">
                 <Label className="text-lg font-medium">House Type</Label>
-                <div className="overflow-x-auto whitespace-nowrap no-scrollbar flex gap-2 -mx-4 px-4">
-                  <FilterButton
+                <div className="overflow-x-auto whitespace-nowrap flex gap-2 -mx-4 px-4 scrollbar-hide">
+                <FilterButton
                     value="all"
                     label="All of them"
                     selected={selectedHouseType === "all"}

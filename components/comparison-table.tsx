@@ -169,24 +169,25 @@ export function ComparisonTable({ properties }: ComparisonTableProps) {
       <div className="hidden md:block overflow-x-auto">
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead className="w-[200px]">Feature</TableHead>
-              {properties.map((property) => (
-                <TableHead key={property.id} className="text-center">
-                  <div className="flex flex-col items-center">
-                    <span className="font-semibold">{property.title}</span>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="mt-1 rounded-full border-2 border-red-500 p-0 w-6 h-6"
-                      onClick={() => handleRemove(property.id)}
-                    >
-                      <X className="h-4 w-4 text-red-500" />
-                    </Button>
-                  </div>
-                </TableHead>
-              ))}
-            </TableRow>
+          <TableRow>
+  <TableHead className="w-[200px]">Feature</TableHead>
+  {properties.map((property) => (
+    <TableHead key={property.id} className="text-center">
+      <div className="flex items-center justify-center gap-2">
+        <span className="font-semibold break-words text-center">{property.title}</span>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="rounded-full border-2 border-red-500 p-0 w-6 h-6"
+          onClick={() => handleRemove(property.id)}
+        >
+          <X className="h-4 w-4 text-red-500" />
+        </Button>
+      </div>
+    </TableHead>
+  ))}
+</TableRow>
+
           </TableHeader>
           <TableBody>
             <TableRow>
