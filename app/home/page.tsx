@@ -196,9 +196,16 @@ export default function HomePage() {
                     PropScanner is your ultimate tool for finding the perfect property. Start your search to discover a
                     wide range of apartments, houses, and lands tailored to your preferences.
                   </motion.p>
-                  <div className="relative h-40 rounded-lg overflow-hidden">
-                    <Image src="/placeholder.svg" alt="PropScanner App" fill className="object-cover" />
-                  </div>
+                  <div className="relative h-40 rounded-lg overflow-hidden md:hidden">
+  <Image
+    src="illustrations/placeholder.svg"
+    alt="PropScanner App"
+    fill
+    className="object-cover object-[50%_30%]"
+  />
+  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/40 to-white"></div>
+</div>
+
                   <Button onClick={handleSearchClick} className="w-full group">
                     Start Your Search
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />

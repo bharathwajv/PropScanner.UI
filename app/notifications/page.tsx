@@ -47,7 +47,7 @@ export default function NotificationsPage() {
           {notificationAlerts.length === 0 && <p className="text-center text-gray-500">No notification alerts set</p>}
         </div>
         <div className="mt-8 text-center">
-          <Button variant="outline" onClick={() => router.push("/manage-notifications")}>
+          <Button variant="outline" >
             Manage Notifications
           </Button>
         </div>

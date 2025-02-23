@@ -66,8 +66,8 @@ export function PropertyDetailsPopup() {
   const handleOpenSource = () => {
     const sourceUrls = {
       "99acres": "https://www.99acres.com",
-      nobroker: "https://www.nobroker.in",
-      magicbricks: "https://www.magicbricks.com",
+      NoBroker: "https://www.nobroker.in",
+      MagicBricks: "https://www.magicbricks.com",
     }
     const url = sourceUrls[property.source as keyof typeof sourceUrls] || "https://www.99acres.com"
     window.open(url, "_blank")
@@ -80,6 +80,8 @@ export function PropertyDetailsPopup() {
   const handleUnpinField = (field: string) => {
     dispatch(unpinField(field))
   }
+
+  const areaInSqft = property.specs?.area ? property.specs.area * 10.7639 : null
 
   return (
     <AnimatePresence>
@@ -183,7 +185,7 @@ export function PropertyDetailsPopup() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Square className="w-4 h-4" />
-                    <span>{property.specs?.area || "N/A"}</span>
+                    <span>{areaInSqft ? areaInSqft.toFixed(2) : "N/A"} sqft</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Home className="w-4 h-4" />
@@ -343,11 +345,11 @@ export function PropertyDetailsPopup() {
             </ScrollArea>
 
             <div className="absolute bottom-0 left-0 right-0 bg-background/50 backdrop-blur-sm p-4 flex gap-4">
-              <Button variant="outline" className="flex-1" onClick={handleOpenSource}>
+              <Button variant="outline" className="flex-1 text-lg p-3" onClick={handleOpenSource}>
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Open {property.source}
               </Button>
-              <Button className="flex-1 bg-primary hover:bg-primary/90">Book a Call</Button>
+              <Button className="flex-1 bg-primary hover:bg-primary/90 text-lg p-3">Book a Call</Button>
             </div>
           </motion.div>
         </motion.div>
