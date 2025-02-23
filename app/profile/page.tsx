@@ -13,7 +13,7 @@ import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { UserStorage, type User } from "@/lib/UserStorage"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, LogOut } from "lucide-react"
+import { LogOut } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { PageHeader } from "@/components/shared/page-header"
 
@@ -47,8 +47,10 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Page Header */}
       <PageHeader title="Profile" />
 
+      {/* Main Scrollable Content */}
       <main className="flex-1 container mx-auto px-4 py-6 space-y-6">
         <Card className="p-6 space-y-6">
           <div>
@@ -57,6 +59,7 @@ export default function ProfilePage() {
           </div>
 
           <div className="space-y-4">
+            {/* Theme Selector */}
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-medium">Theme</h3>
@@ -74,6 +77,7 @@ export default function ProfilePage() {
               </Select>
             </div>
 
+            {/* Notifications Switch */}
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-medium">Notifications</h3>
@@ -83,6 +87,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
+          {/* Conditionally render notification settings */}
           <AnimatePresence initial={false}>
             {notificationsEnabled && (
               <motion.div
@@ -92,6 +97,7 @@ export default function ProfilePage() {
                 transition={{ duration: 0.2 }}
                 className="space-y-4 overflow-hidden"
               >
+                {/* Frequency */}
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label className="text-base">Notification Frequency</Label>
@@ -111,6 +117,7 @@ export default function ProfilePage() {
                   </Select>
                 </div>
 
+                {/* Time (only for daily) */}
                 <AnimatePresence initial={false}>
                   {notificationFrequency === "daily" && (
                     <motion.div
@@ -143,23 +150,27 @@ export default function ProfilePage() {
           </AnimatePresence>
         </Card>
 
+        {/* About Section */}
         <Card className="p-6">
           <div className="space-y-4">
             <h2 className="text-xl font-semibold">About PropScanner</h2>
             <p className="text-muted-foreground">
-              PropScanner is revolutionizing the real estate industry by providing innovative solutions for property search
-              and management. Our mission is to make property hunting simpler and more efficient for everyone.
+              PropScanner is revolutionizing the real estate industry by providing innovative solutions 
+              for property search and management. Our mission is to make property hunting simpler and 
+              more efficient for everyone.
             </p>
             <p className="text-sm text-muted-foreground">Version 1.0.0</p>
           </div>
         </Card>
+      </main>
 
+      {/* Sticky/Fixed Logout Button at Bottom */}
+      <div className="sticky bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4">
         <Button variant="destructive" className="w-full" size="lg" onClick={handleLogout}>
           <LogOut className="w-4 h-4 mr-2" />
           Logout
         </Button>
-      </main>
+      </div>
     </div>
   )
 }
-

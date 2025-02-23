@@ -32,16 +32,15 @@ export function PageHeader({
             <button
               onClick={() => router.back()}
               className={cn(
-                // Entire button: pill shape, subtle border, light-gray background
-                "flex items-center gap-2 rounded-full border border-gray-200 bg-gray-100",
-                // Adjust padding & text style
-                "px-4 py-2.5 text-sm font-medium text-black",
-                // Hover effect for a slightly darker gray
-                "hover:bg-gray-200 transition-colors"
+                "flex items-center rounded-full border border-gray-200 px-4 py-2.5 transition-colors hover:bg-gray-100"
               )}
             >
-              <ArrowLeft className="h-4 w-4 text-black" />
-              <span>Go Back</span>
+              {/* Icon with Circular Background */}
+              <span className="flex items-center justify-center h-8 w-11 rounded-full bg-gray-100">
+                <ArrowLeft className="h-4 w-4 text-black" />
+              </span>
+              {/* "Go Back" Text */}
+              <span className="ml-2 text-sm font-medium text-black">Go Back</span>
             </button>
           )}
           <h1 className="absolute left-1/2 -translate-x-1/2 text-lg font-semibold">

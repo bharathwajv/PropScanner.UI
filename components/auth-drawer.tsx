@@ -53,13 +53,12 @@ export function AuthDrawer({ isOpen, onOpenChange }: AuthDrawerProps) {
       const user: User = {
         username,
         password,
-        name: "Property Enthusiast",
-        mobileNumber: "+1234567890",
+        name: "Jhon Smith",
+        mobileNumber: "+9898696969",
       }
       
       UserStorage.setUser(user)
       dispatch(login(user))
-      toast.success("Successfully logged in!")
       onOpenChange(false)
       router.push("/profile")
     } catch (error) {
