@@ -118,8 +118,8 @@ export default function HomePage() {
       >
         <Search className="h-6 w-6 text-primary mr-4 flex-shrink-0" />
         <div className="flex-1 min-w-0">
-          <div className="font-semibold text-lg md:text-xl truncate">Find Your New Home</div>
-          <div className="text-muted-foreground truncate">Search apartments, houses, lands and more</div>
+          <div className="font-semibold text-lg xs:text-base md:text-xl truncate">Find Your New Home</div>
+          <div className="text-muted-foreground truncate text-sm xs:text-xs">Search apartments, houses, lands and more</div>
         </div>
       </div>
 
@@ -218,8 +218,8 @@ export default function HomePage() {
       </div>
 
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold">For You</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <h2 className="text-2xl font-bold xs:text-lg">For You</h2>
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {properties.slice(0, 3).map((property) => (
             <PropertyCard key={property.id} {...property} />
           ))}
