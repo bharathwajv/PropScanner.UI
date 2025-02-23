@@ -1,11 +1,9 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { DualSlider } from "@/components/ui/dual-slider"
 import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer"
-import { SlidersHorizontal } from "lucide-react"
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 
@@ -16,30 +14,19 @@ interface FilterDrawerProps {
 
 export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
   const [isSmallDevice, setIsSmallDevice] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [propertyCount, setPropertyCount] = useState(0)
   const [selectedHouseType, setSelectedHouseType] = useState("all")
   const [selectedRooms, setSelectedRooms] = useState("4")
   const [selectedSize, setSelectedSize] = useState("100")
 
   useEffect(() => {
-    const checkScreenSize = () => {
-      setIsSmallDevice(window.innerWidth < 640)
-    }
-
+    const checkScreenSize = () => setIsSmallDevice(window.innerWidth < 640)
     checkScreenSize()
     window.addEventListener("resize", checkScreenSize)
-
     return () => window.removeEventListener("resize", checkScreenSize)
   }, [])
 
   const handleApply = () => {
-    setIsLoading(true)
-    setTimeout(() => {
-      onOpenChange(false)
-      setIsLoading(false)
-    }, 1500)
+    onOpenChange(false)
   }
 
   const FilterButton = ({
@@ -62,7 +49,7 @@ export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className={isSmallDevice ? "h-[85vh]" : ""}>
-        <div className="mx-auto w-full max-w-sm flex flex-col h-full">
+        <div className="mx-auto w-full max-w-sm flex flex-col h-full p-0">
           <DrawerHeader>
             <DrawerTitle className="text-2xl">Filter</DrawerTitle>
           </DrawerHeader>
@@ -70,7 +57,7 @@ export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
             <div className="space-y-8">
               <div className="space-y-4">
                 <Label className="text-lg font-medium">House Type</Label>
-                <div className="flex flex-wrap gap-2">
+                <div className="overflow-x-auto whitespace-nowrap no-scrollbar flex gap-2 -mx-4 px-4">
                   <FilterButton
                     value="all"
                     label="All of them"
@@ -94,7 +81,7 @@ export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
 
               <div className="space-y-4">
                 <Label className="text-lg font-medium">Rooms</Label>
-                <div className="flex flex-wrap gap-2">
+                <div className="overflow-x-auto whitespace-nowrap no-scrollbar flex gap-2 -mx-4 px-4">
                   <FilterButton
                     value="3"
                     label="3 and less"
@@ -118,7 +105,7 @@ export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
 
               <div className="space-y-4">
                 <Label className="text-lg font-medium">Size (M²)</Label>
-                <div className="flex flex-wrap gap-2">
+                <div className="overflow-x-auto whitespace-nowrap no-scrollbar flex gap-2 -mx-4 px-4">
                   <FilterButton
                     value="100"
                     label="Up to 100"
@@ -150,22 +137,14 @@ export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
           <DrawerFooter className="px-4 py-6">
             <div className="flex gap-3">
-              <Button
-                variant="outline"
-                className="flex-1 rounded-full border-gray-200 hover:bg-gray-50"
-                onClick={() => onOpenChange(false)}
-              >
+              <Button variant="outline" className="flex-1 h-12 text-lg rounded-full border-gray-200 hover:bg-gray-50" onClick={() => onOpenChange(false)}>
                 Reset
               </Button>
-              <Button 
-                className="flex-1 rounded-full bg-[#1c1c1c] hover:bg-[#2c2c2c]" 
-                onClick={handleApply}
-              >
+              <Button className="flex-1 h-12 text-lg rounded-full bg-[#1c1c1c] hover:bg-[#2c2c2c]" onClick={handleApply}>
                 Apply
               </Button>
             </div>
@@ -175,4 +154,3 @@ export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
     </Drawer>
   )
 }
-

@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Heart, Scale, Building, Info } from "lucide-react"
@@ -52,6 +52,31 @@ export default function PropertyCard({
   const compareIds = useSelector((state: RootState) => state.compare.ids)
   const notificationAlerts = useSelector((state: RootState) => state.notifications.alerts)
   const [showPriceAlertsInfo, setShowPriceAlertsInfo] = useState(false)
+  const [bgColor, setBgColor] = useState("bg-white")
+  const [textColor, setTextColor] = useState("text-black")
+
+  useEffect(() => {
+    const img = new window.Image()
+    img.src = image
+    img.onload = () => {
+      const canvas = document.createElement("canvas")
+      const context = canvas.getContext("2d")
+      if (context) {
+        canvas.width = 1
+        canvas.height = 1
+        context.drawImage(img, 0, 0, 1, 1)
+        const [r, g, b] = context.getImageData(0, 0, 1, 1).data
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000
+        if (brightness < 128) {
+          setBgColor("bg-black/50") // Dark background
+          setTextColor("text-white") // Light text
+        } else {
+          setBgColor("bg-white/50") // Light background
+          setTextColor("text-black") // Dark text
+        }
+      }
+    }
+  }, [image])
 
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -104,7 +129,7 @@ export default function PropertyCard({
   return (
     <>
       <motion.div layoutId={`property-card-${id}`} onClick={handleCardClick} className="cursor-pointer">
-        <Card className="overflow-hidden hover:shadow-md transition-all duration-300 ease-in-out">
+        <Card className={`overflow-hidden hover:shadow-md transition-all duration-300 ease-in-out ${bgColor}`}>
           <motion.div className="relative aspect-[4/3]" layoutId={`property-image-${id}`}>
             <Image
               src={image || "/placeholder.svg"}
@@ -116,7 +141,7 @@ export default function PropertyCard({
             />
             <Badge
               variant="secondary"
-              className="absolute top-3 left-3 flex items-center gap-2 px-3 py-1.5 text-sm backdrop-blur-md bg-black/20 border-none text-white shadow-sm"
+              className={`absolute top-3 left-3 flex items-center gap-2 px-3 py-1.5 text-sm backdrop-blur-md border-none ${textColor} shadow-sm`}
             >
               <Building className="w-4 h-4" />
               {source}
@@ -145,20 +170,20 @@ export default function PropertyCard({
           <div className="p-3 sm:p-4">
             <div className="flex justify-between items-start">
               <div className="min-w-0 flex-1">
-                <motion.h3 layoutId={`property-title-${id}`} className="font-semibold text-foreground truncate">
+                <motion.h3 layoutId={`property-title-${id}`} className={`font-semibold ${textColor} truncate`}>
                   {title}
                 </motion.h3>
-                <motion.div layoutId={`property-specs-${id}`} className="text-sm text-muted-foreground mt-1 truncate">
+                <motion.div layoutId={`property-specs-${id}`} className={`text-sm ${textColor} mt-1 truncate`}>
                   {specs.beds}bd {specs.baths}ba {specs.area}
                 </motion.div>
                 <motion.div
                   layoutId={`property-location-${id}`}
-                  className="text-sm text-muted-foreground mt-1 truncate"
+                  className={`text-sm ${textColor} mt-1 truncate`}
                 >
                   {location}
                 </motion.div>
               </div>
-              <motion.div layoutId={`property-price-${id}`} className="font-semibold text-primary ml-2">
+              <motion.div layoutId={`property-price-${id}`} className={`font-semibold ${textColor} ml-2`}>
                 ₹{price.toLocaleString()}
               </motion.div>
             </div>
@@ -169,7 +194,7 @@ export default function PropertyCard({
                   onCheckedChange={handleNotificationToggle}
                   onClick={(e) => e.stopPropagation()}
                 />
-                <span className="text-sm text-muted-foreground">Price Alerts</span>
+                <span className={`text-sm ${textColor}`}>Price Alerts</span>
                 <button
                   className="p-1 hover:bg-gray-100 rounded-full transition-colors"
                   onClick={(e) => {

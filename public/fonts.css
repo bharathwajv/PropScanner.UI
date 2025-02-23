@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'BasisGrotesqueArabicPro';
+    src: url('/public/BasisGrotesqueArabicPro.woff2') format('woff2'),
+         url('/public/BasisGrotesqueArabicPro.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+} 

@@ -7,6 +7,7 @@ import type { Metadata } from "next"
 import { AnimatePresence } from "framer-motion"
 import { usePathname } from "next/navigation"
 import type React from "react" // Added import for React
+import './fonts.css'
 
 const metadata: Metadata = {
   title: "PropScanner",
