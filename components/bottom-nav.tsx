@@ -69,7 +69,7 @@ export function BottomNav({ className }: BottomNavProps) {
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="flex items-center gap-2 sm:gap-3 bg-white rounded-full px-3 sm:px-4 py-2 sm:py-3 shadow-lg border border-black/10"
             >
-              <button
+              {/* <button
                 onClick={() => {
                   if (!isHomePage) {
                     router.push("/")
@@ -81,7 +81,16 @@ export function BottomNav({ className }: BottomNavProps) {
                 )}
               >
                 <Home className="w-6 h-6 sm:w-7 sm:h-7" />
-              </button>
+              </button> */}
+              <Link
+                href="/home"
+                className={cn(
+                  "p-4 rounded-full transition-colors",
+                  isHomePage ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:bg-secondary/80",
+                )}
+              >
+                 <Home className="w-6 h-6 sm:w-7 sm:h-7" />
+              </Link>
               <Link
                 href="/favorites"
                 className={cn(
