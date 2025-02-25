@@ -76,7 +76,7 @@ export function BottomNav({ className }: BottomNavProps) {
           <div className="flex justify-between max-w-lg mx-auto">
             <motion.nav
               initial={isHomePage ? { x: 0 } : { x: "50%" }}
-              animate={isHomePage ? { x: 0 } : { x: `${window.innerWidth * 0.2}px` }}
+              animate={isHomePage ? { x: 0 } : { x: `${globalThis.innerWidth * 0.2}px` }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className={cn(`flex items-center ${navGap} bg-white rounded-full px-3 sm:px-4 ${navPadding} sm:py-3 shadow-lg border border-black/10`)}
             >
