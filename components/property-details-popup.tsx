@@ -30,6 +30,8 @@ import { addToCompare, removeFromCompare } from "@/lib/redux/compareSlice"
 import { toast } from "react-hot-toast"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
+import { LoadingButton } from "@/components/ui/loading-button"
+import { useState } from "react"
 
 export function PropertyDetailsPopup() {
   const dispatch = useDispatch()
@@ -40,6 +42,7 @@ export function PropertyDetailsPopup() {
   const compareIds = useSelector((state: RootState) => state.compare.ids)
   const pinnedFields = useSelector((state: RootState) => state.properties.pinnedFields)
 
+  const [isBookingCall, setIsBookingCall] = useState(false)
   if (!property) return null
 
   const handleClose = () => {
@@ -80,7 +83,13 @@ export function PropertyDetailsPopup() {
   const handleUnpinField = (field: string) => {
     dispatch(unpinField(field))
   }
-
+  const handleBookCall = async () => {
+    setIsBookingCall(true)
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+    setIsBookingCall(false)
+    toast.success("Call scheduled successfully!")
+  }
   const areaInSqft = property.specs?.area ? property.specs.area * 10.7639 : null
 
   return (
@@ -349,7 +358,14 @@ export function PropertyDetailsPopup() {
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Open {property.source}
               </Button>
-              <Button className="flex-1 bg-primary hover:bg-primary/90 text-lg p-3">Book a Call</Button>
+              <LoadingButton
+                className="flex-1 bg-primary hover:bg-primary/90 text-lg p-3"
+                loading={isBookingCall}
+                loadingText="Booking Call"
+                onClick={handleBookCall}
+              >
+                Book a Call
+              </LoadingButton>
             </div>
           </motion.div>
         </motion.div>

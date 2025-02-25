@@ -39,8 +39,8 @@ export function PageHeader({
               <span className="flex items-center justify-center h-8 w-11 rounded-full bg-gray-100">
                 <ArrowLeft className="h-4 w-4 text-black" />
               </span>
-              {/* "Go Back" Text */}
-              <span className="ml-2 text-sm font-medium text-black">Go Back</span>
+              {/* "Go Back" Text - removed if screen size is small */}
+              <span className="ml-2 text-sm font-medium text-black hidden sm:inline">Go Back</span>
             </button>
           )}
           <h1 className="absolute left-1/2 -translate-x-1/2 text-lg font-semibold">
