@@ -21,6 +21,7 @@ export function BottomNav({ className }: BottomNavProps) {
   const [lastScrollY, setLastScrollY] = useState(0)
   const dispatch = useDispatch()
   const isSearchOpen = useSelector((state: RootState) => state.ui.isSearchOpen)
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight)
 
   const isComparePage = pathname === "/compare"
   const isFavoritesPage = pathname === "/favorites"
@@ -44,13 +45,23 @@ export function BottomNav({ className }: BottomNavProps) {
       }
     }
 
+    const handleResize = () => {
+      setViewportHeight(window.innerHeight)
+    }
+
     if (typeof window !== "undefined") {
       window.addEventListener("scroll", controlNavbar)
+      window.addEventListener("resize", handleResize)
       return () => {
         window.removeEventListener("scroll", controlNavbar)
+        window.removeEventListener("resize", handleResize)
       }
     }
   }, [lastScrollY, isComparePage, isFavoritesPage])
+
+  // Determine classes based on viewport height
+  const navPadding = viewportHeight < 700 ? "py-0" : "py-2"
+  const navGap = viewportHeight < 700 ? "gap-0" : "gap-2"
 
   return (
     <AnimatePresence>
@@ -65,23 +76,10 @@ export function BottomNav({ className }: BottomNavProps) {
           <div className="flex justify-between max-w-lg mx-auto">
             <motion.nav
               initial={isHomePage ? { x: 0 } : { x: "50%" }}
-              animate={isHomePage ? { x: 0 } : { x: "50%" }}
+              animate={isHomePage ? { x: 0 } : { x: `${window.innerWidth * 0.2}px` }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="flex items-center gap-2 sm:gap-3 bg-white rounded-full px-3 sm:px-4 py-2 sm:py-3 shadow-lg border border-black/10"
+              className={cn(`flex items-center ${navGap} bg-white rounded-full px-3 sm:px-4 ${navPadding} sm:py-3 shadow-lg border border-black/10`)}
             >
-              {/* <button
-                onClick={() => {
-                  if (!isHomePage) {
-                    router.push("/")
-                  }
-                }}
-                className={cn(
-                  "p-4 rounded-full transition-colors",
-                  isHomePage ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:bg-secondary/80",
-                )}
-              >
-                <Home className="w-6 h-6 sm:w-7 sm:h-7" />
-              </button> */}
               <Link
                 href="/home"
                 className={cn(
