@@ -21,7 +21,7 @@ export function BottomNav({ className }: BottomNavProps) {
   const [lastScrollY, setLastScrollY] = useState(0)
   const dispatch = useDispatch()
   const isSearchOpen = useSelector((state: RootState) => state.ui.isSearchOpen)
-  const [viewportHeight, setViewportHeight] = useState(window.innerHeight)
+  const [viewportHeight, setViewportHeight] = useState(globalThis.innerHeight)
 
   const isComparePage = pathname === "/compare"
   const isFavoritesPage = pathname === "/favorites"
@@ -35,7 +35,7 @@ export function BottomNav({ className }: BottomNavProps) {
           return
         }
 
-        const currentScrollY = window.scrollY
+        const currentScrollY = globalThis.scrollY
         if (currentScrollY > lastScrollY && currentScrollY > 0) {
           setIsVisible(false)
         } else {
@@ -46,15 +46,15 @@ export function BottomNav({ className }: BottomNavProps) {
     }
 
     const handleResize = () => {
-      setViewportHeight(window.innerHeight)
+      setViewportHeight(globalThis.innerHeight)
     }
 
     if (typeof window !== "undefined") {
-      window.addEventListener("scroll", controlNavbar)
-      window.addEventListener("resize", handleResize)
+      globalThis.addEventListener("scroll", controlNavbar)
+      globalThis.addEventListener("resize", handleResize)
       return () => {
-        window.removeEventListener("scroll", controlNavbar)
-        window.removeEventListener("resize", handleResize)
+        globalThis.removeEventListener("scroll", controlNavbar)
+        globalThis.removeEventListener("resize", handleResize)
       }
     }
   }, [lastScrollY, isComparePage, isFavoritesPage])
