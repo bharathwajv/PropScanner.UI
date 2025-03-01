@@ -87,7 +87,7 @@ const PropertyDetailsModal: React.FC<PropertyDetailsModalProps> = ({ isOpen, onC
               >
                 <X className="w-5 h-5" />
               </button>
-              <button 
+              <button
                 className={cn(
                   "p-2 rounded-full transition-colors backdrop-blur-sm",
                   compareIds.includes(property.id)
@@ -98,11 +98,11 @@ const PropertyDetailsModal: React.FC<PropertyDetailsModalProps> = ({ isOpen, onC
               >
                 <Scale className="w-5 h-5" />
               </button>
-              <button 
+              <button
                 className={cn(
                   "p-2 rounded-full transition-colors backdrop-blur-sm",
-                  isFavorite 
-                    ? "bg-primary text-primary-foreground" 
+                  isFavorite
+                    ? "bg-primary text-primary-foreground"
                     : "bg-background/50 text-white hover:bg-background/70"
                 )}
                 onClick={handleToggleFavorite}
@@ -130,7 +130,8 @@ const PropertyDetailsModal: React.FC<PropertyDetailsModalProps> = ({ isOpen, onC
                   layoutId={`property-price-${property.id}`}
                   className="text-3xl font-semibold text-primary"
                 >
-                  ${property.price}
+                  {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(property.price)}
+
                 </motion.div>
               </div>
 
@@ -163,7 +164,7 @@ const PropertyDetailsModal: React.FC<PropertyDetailsModalProps> = ({ isOpen, onC
               <div>
                 <h3 className="text-2xl font-semibold mb-4">Description</h3>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  This beautiful property features modern amenities and a spacious layout. 
+                  This beautiful property features modern amenities and a spacious layout.
                   Perfect for families or professionals looking for comfort and style.
                   The property has been recently renovated and is move-in ready.
                 </p>

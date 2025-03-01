@@ -5,7 +5,6 @@ import type { RootState } from "@/lib/redux/store"
 import { setPropertyDetailsOpen, setSelectedPropertyId } from "@/lib/redux/uiSlice"
 import { pinField, unpinField } from "@/lib/redux/propertiesSlice"
 import { motion, AnimatePresence } from "framer-motion"
-import type { Property } from "@/lib/types"
 import {
   X,
   Heart,
@@ -86,11 +85,11 @@ export function PropertyDetailsPopup() {
   const handleBookCall = async () => {
     setIsBookingCall(true)
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 6000))
     setIsBookingCall(false)
     toast.success("Call scheduled successfully!")
   }
-  const areaInSqft = property.specs?.area ? property.specs.area * 10.7639 : null
+  const areaInSqft = property.specs?.area ? Number(property.specs.area) * 10.7639 : null
 
   return (
     <AnimatePresence>
@@ -157,12 +156,12 @@ export function PropertyDetailsPopup() {
 
                 <div className="flex items-center justify-between">
                   <motion.div layoutId={`property-price-${property.id}`} className="text-2xl font-semibold">
-                    ₹{property.price.toLocaleString()}
+                    {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(property.price)}
                   </motion.div>
                   <div className="flex gap-2">
-                    <Button 
-                      variant={isCompared ? "default" : "outline"} 
-                      size="icon" 
+                    <Button
+                      variant={isCompared ? "default" : "outline"}
+                      size="icon"
                       onClick={handleToggleCompare}
                       className={cn(
                         "transition-colors",
@@ -358,11 +357,12 @@ export function PropertyDetailsPopup() {
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Open {property.source}
               </Button>
+
               <LoadingButton
+                onClick={handleBookCall}
                 className="flex-1 bg-primary hover:bg-primary/90 text-lg p-3"
                 loading={isBookingCall}
-                loadingText="Booking Call"
-                onClick={handleBookCall}
+                loadingStates={["Finding Slots", "Booking Call", "Bingo!"]}
               >
                 Book a Call
               </LoadingButton>

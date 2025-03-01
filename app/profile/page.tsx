@@ -48,11 +48,11 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Page Header */}
-      <PageHeader title="Profile" />
+      <PageHeader title="Profile" className="fixed top-0 left-0 w-full bg-white z-10" />
 
       {/* Main Scrollable Content */}
-      <main className="flex-1 container mx-auto px-4 py-6 space-y-6">
-        <Card className="p-6 space-y-6">
+      <main className="flex-1 container mx-auto px-4 py-20 space-y-6">
+        <Card className="p-6 space-y-6 mt-6">
           <div>
             <h2 className="text-xl font-semibold">{user?.name}</h2>
             <p className="text-muted-foreground">{user?.mobileNumber}</p>

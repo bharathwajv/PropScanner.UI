@@ -184,7 +184,8 @@ export default function PropertyCard({
                 </motion.div>
               </div>
               <motion.div layoutId={`property-price-${id}`} className={`font-semibold ${textColor} ml-2`}>
-                ₹{price.toLocaleString()}
+              {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(price)}
+
               </motion.div>
             </div>
             <div className="mt-4 flex items-center justify-between border-t pt-3">
