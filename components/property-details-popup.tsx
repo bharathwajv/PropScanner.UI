@@ -352,15 +352,15 @@ export function PropertyDetailsPopup() {
               </div>
             </ScrollArea>
 
-            <div className="absolute bottom-0 left-0 right-0 bg-background/50 backdrop-blur-sm p-4 flex gap-4">
-              <Button variant="outline" className="flex-1 text-lg p-3" onClick={handleOpenSource}>
+            <div className="absolute bottom-0 left-0 right-0 bg-background/50 backdrop-blur-sm p-4 flex gap-4 flex-wrap">
+              <Button variant="outline" className="flex-1 min-w-[120px] text-lg p-3" onClick={handleOpenSource}>
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Open {property.source}
               </Button>
 
               <LoadingButton
                 onClick={handleBookCall}
-                className="flex-1 bg-primary hover:bg-primary/90 text-lg p-3"
+                className="flex-1 min-w-[120px] bg-primary hover:bg-primary/90 text-lg p-3"
                 loading={isBookingCall}
                 loadingStates={["Finding Slots", "Booking Call", "Bingo!"]}
               >
