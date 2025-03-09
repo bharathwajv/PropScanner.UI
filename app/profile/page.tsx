@@ -155,8 +155,8 @@ export default function ProfilePage() {
           <div className="space-y-4">
             <h2 className="text-xl font-semibold">About PropScanner</h2>
             <p className="text-muted-foreground">
-              PropScanner is revolutionizing the real estate industry by providing innovative solutions 
-              for property search and management. Our mission is to make property hunting simpler and 
+              PropScanner is revolutionizing the real estate industry by providing innovative solutions
+              for property search and management. Our mission is to make property hunting simpler and
               more efficient for everyone.
             </p>
             <p className="text-sm text-muted-foreground">Version 1.0.0</p>
@@ -165,12 +165,21 @@ export default function ProfilePage() {
       </main>
 
       {/* Sticky/Fixed Logout Button at Bottom */}
-      <div className="sticky bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4">
-        <Button variant="destructive" className="w-full" size="lg" onClick={handleLogout}>
-          <LogOut className="w-4 h-4 mr-2" />
-          Logout
-        </Button>
+      <div className="sticky bottom-0 left-0 bg-white border-t border-gray-200 p-4">
+        {/* Wrap the button in the same container constraints as the cards */}
+        <div className="container mx-auto px-4">
+          <Button
+            variant="destructive"
+            className="w-full" // The w-full is now limited by the container width
+            size="lg"
+            onClick={handleLogout}
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            Logout
+          </Button>
+        </div>
       </div>
+
     </div>
   )
 }
