@@ -149,12 +149,12 @@ export default function PropertyCard({
             <div className="absolute bottom-2 right-2 flex gap-2">
               <button
                 className={cn(
-                  "p-3 rounded-full transition-colors bg-white/90 hover:bg-white shadow-sm",
-                  isCompared ? "text-primary bg-white" : "text-secondary-foreground",
+                  "p-3 rounded-full transition-colors bg-white/85 hover:bg-white shadow-sm",
+                  isCompared ? "text-primary bg-white ring-2 ring-primary" : "text-secondary-foreground",
                 )}
                 onClick={handleToggleCompare}
               >
-                <Scale className="w-5 h-5" />
+                <Scale className="w-6 h-6" />
               </button>
               <button
                 className={cn(
@@ -163,7 +163,7 @@ export default function PropertyCard({
                 )}
                 onClick={handleToggleFavorite}
               >
-                <Heart className="w-5 h-5" fill={isFavorite ? "currentColor" : "none"} />
+                <Heart className="w-6 h-6" fill={isFavorite ? "currentColor" : "none"} />
               </button>
             </div>
           </motion.div>
