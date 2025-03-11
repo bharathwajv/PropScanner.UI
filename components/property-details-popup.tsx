@@ -353,35 +353,35 @@ export function PropertyDetailsPopup() {
 
             <div className="absolute bottom-0 left-0 right-0 bg-background/50 backdrop-blur-sm p-4 flex gap-4 flex-wrap">
               {/* Modified Button to match the image style */}
-              <Button 
-  variant="outline" 
-  className="flex-1 min-w-[120px] bg-gray-100 hover:bg-gray-200 text-black rounded-lg flex items-center justify-between px-6 border border-gray-300" 
-  onClick={handleOpenSource}
->
-  <span className="text-lg truncate">Open {property.source}</span>
-  <motion.div 
-    className="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0"
-    initial={{ x: 0, opacity: 0 }}
-    animate={{ x: 12, opacity: 1 }}
-    transition={{ 
-      duration: 0.5, 
-      delay: 0.5, 
-      type: "spring",
-      stiffness: 100
-    }}
-  >
-    <svg 
-      width="14" 
-      height="14" 
-      viewBox="0 0 14 14" 
-      fill="none" 
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M3.5 10.5L10.5 3.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M4 3.5H10.5V10" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  </motion.div>
-</Button>
+              <Button
+                variant="outline"
+                className="flex-1 min-w-[120px] bg-gray-100 hover:bg-gray-200 text-black rounded-lg flex items-center justify-between px-6 border border-gray-300"
+                onClick={handleOpenSource}
+              >
+                <span className="text-lg truncate">Open {property.source}</span>
+                <motion.div
+                  className="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0"
+                  initial={{ x: 0, opacity: 0 }}
+                  animate={{ x: 12, opacity: 1 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.5,
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M3.5 10.5L10.5 3.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M4 3.5H10.5V10" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </motion.div>
+              </Button>
               <LoadingButton
                 onClick={handleBookCall}
                 className="flex-1 min-w-[120px] bg-primary hover:bg-primary/90 text-lg p-3"
