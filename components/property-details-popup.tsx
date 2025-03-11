@@ -29,7 +29,8 @@ import { toast } from "react-hot-toast"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 import { LoadingButton } from "@/components/ui/loading-button"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { ScrollIndicator } from "./ui/scroll-indicator"
 
 export function PropertyDetailsPopup() {
   const dispatch = useDispatch()
@@ -71,7 +72,7 @@ export function PropertyDetailsPopup() {
       MagicBricks: "https://www.magicbricks.com",
     }
     const url = sourceUrls[property.source as keyof typeof sourceUrls] || "https://www.99acres.com"
-    window.open(url, "_blank")
+    globalThis.open(url, "_blank")
   }
 
   const handlePinField = (field: string) => {
@@ -351,7 +352,7 @@ export function PropertyDetailsPopup() {
               </div>
             </ScrollArea>
 
-            <div className="absolute bottom-0 left-0 right-0 bg-background/50 backdrop-blur-sm p-4 flex gap-4 flex-wrap">
+            <div className="absolute bottom-0 left-0 right-0 bg-background/50 backdrop-blur-sm  bg-white border-t shadow-[0_-8px_16px_-6px_rgba(0,0,0,0.1)] p-4 flex gap-4 flex-wrap">
               {/* Modified Button to match the image style */}
               <Button
                 variant="outline"
@@ -367,7 +368,7 @@ export function PropertyDetailsPopup() {
                     duration: 0.5,
                     delay: 0.5,
                     type: "spring",
-                    stiffness: 100
+                    stiffness: 75
                   }}
                 >
                   <svg
