@@ -119,10 +119,6 @@ export function BottomNav({ className }: BottomNavProps) {
                 className="flex items-center"
               >
                  <SearchFab
-                  onClick={() => {
-                   // dispatch(setIsSearchOpen(true))
-                    //router.push("/search-results")
-                  }}
                   className="p-4 rounded-full bg-white shadow-lg text-muted-foreground hover:text-primary transition-colors flex items-center justify-center relative border border-black/10"
                 />
               </motion.div>
