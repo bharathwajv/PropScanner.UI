@@ -12,7 +12,7 @@ const locations = [
   { value: "ecr", label: "ECR, Chennai" },
   { value: "omr", label: "OMR, Chennai" },
   { value: "tambaram", label: "Tambaram, Chennai" },
-  { value: "sithalapakkam", label: "Sithalapakkam, Chennai" },
+  { value: "Besant Nagar", label: "Besant Nagar, Chennai" },
 ]
 
 interface LocationComboboxProps {

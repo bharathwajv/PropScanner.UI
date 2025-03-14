@@ -20,7 +20,7 @@ export function SearchBar({ onLocationSelect }: SearchBarProps) {
     "ECR, Chennai",
     "OMR, Chennai",
     "Tambaram, Chennai",
-    "Sithalapakkam, Chennai",
+    "Besant Nagar, Chennai",
   ]
 
   useEffect(() => {
