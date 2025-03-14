@@ -197,14 +197,14 @@ export default function HomePage() {
                     wide range of apartments, houses, and lands tailored to your preferences.
                   </motion.p>
                   <div className="relative h-40 rounded-lg overflow-hidden md:hidden">
-  <Image
-    src="illustrations/placeholder.svg"
-    alt="PropScanner App"
-    fill
-    className="object-cover object-[50%_30%]"
-  />
-  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/40 to-white"></div>
-</div>
+                    <Image
+                      src="illustrations/placeholder.svg"
+                      alt="PropScanner App"
+                      fill
+                      className="object-cover object-[50%_30%]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/40 to-white"></div>
+                  </div>
 
                   <Button onClick={handleSearchClick} className="w-full group">
                     Start Your Search

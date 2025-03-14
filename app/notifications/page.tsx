@@ -35,8 +35,8 @@ export default function NotificationsPage() {
               <div className="flex items-start gap-4">
                 <Bell className="w-5 h-5 mt-1 text-primary" />
                 <div className="flex-grow">
-                  <p className="text-gray-900">{alert.location}</p>
-                  <p className="text-sm text-gray-500 mt-1">{alert.filters}</p>
+                  <p className="text-primary">{alert.location}</p>
+                  <p className="text-sm text-primary mt-1">{alert.filters}</p>
                 </div>
                 <Button variant="ghost" size="icon" onClick={() => handleDeleteAlert(alert.id)}>
                   <Trash2 className="h-5 w-5 text-red-500" />
@@ -44,7 +44,7 @@ export default function NotificationsPage() {
               </div>
             </Card>
           ))}
-          {notificationAlerts.length === 0 && <p className="text-center text-gray-500">No notification alerts set</p>}
+          {notificationAlerts.length === 0 && <p className="text-center text-primary">No notification alerts set</p>}
         </div>
         <div className="mt-8 text-center">
           <Button variant="outline" >

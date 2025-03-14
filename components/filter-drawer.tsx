@@ -46,7 +46,7 @@ export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
         "px-6 py-3 rounded-full text-sm transition-all duration-200",
         selected
           ? "bg-primary text-white"
-          : "bg-white text-gray-600 border border-gray-200"
+          : "bg-white text-primary border border-gray-200"
       )}
     >
       {label}
@@ -164,7 +164,7 @@ export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
             <div className="flex gap-4 ">
               <Button
                 variant="outline"
-                className="flex-1 h-12 text-lg rounded-full border-gray-600 hover:bg-gray-50"
+                className="flex-1 h-12 text-lg rounded-full border-primary hover:bg-gray-50"
                 onClick={() => onOpenChange(false)}
               >
                 Reset

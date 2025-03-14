@@ -33,7 +33,7 @@ export function SearchFab({ className }: SearchFabProps) {
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className={cn("relative p-3 rounded-full bg-white shadow-md", className)}
+        className={cn("relative p-3 rounded-full bg-white shadow-md animate-glow", className)}
         onClick={() => setIsOpen(true)}
       >
         <Search className="w-7 h-7" />

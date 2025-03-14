@@ -47,8 +47,8 @@ export function Layout({ children }: LayoutProps) {
                 PropScan
               </Link>
               <div className="flex items-center gap-4">
-                <Link href="/notifications" className="p-2 hover:bg-secondary/80 rounded-full transition-colors">
-                  <Bell className="w-5 h-5" />
+                <Link href="/notifications" className="p-1 hover:bg-secondary/80 rounded-full transition-colors">
+                  <Bell className="w-5 h-5" color="#2E3331"/>
                 </Link>
                 <button 
                   onClick={handleProfileClick}
@@ -56,7 +56,7 @@ export function Layout({ children }: LayoutProps) {
                 >
                   <Avatar>
                     <AvatarImage src="/placeholder-user.jpg" alt="User" />
-                    <AvatarFallback>U</AvatarFallback>
+                    <AvatarFallback>B</AvatarFallback>
                   </Avatar>
                 </button>
               </div>

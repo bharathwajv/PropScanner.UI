@@ -39,12 +39,12 @@ export default function UserPage() {
           </Avatar>
           <div>
             <h2 className="text-xl font-semibold">User Profile</h2>
-            <p className="text-gray-500">{user.phoneNumber}</p>
+            <p className="text-primary">{user.phoneNumber}</p>
           </div>
         </div>
         <div className="space-y-4">
           <div>
-            <h3 className="text-sm font-medium text-gray-500">Phone</h3>
+            <h3 className="text-sm font-medium text-primary">Phone</h3>
             <p>{user.phoneNumber}</p>
           </div>
           {/* Add more user details here as needed */}
