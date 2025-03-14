@@ -45,7 +45,7 @@ export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
       className={cn(
         "px-6 py-3 rounded-full text-sm transition-all duration-200",
         selected
-          ? "bg-gray-900 text-white"
+          ? "bg-primary text-white"
           : "bg-white text-gray-600 border border-gray-200"
       )}
     >
@@ -160,21 +160,22 @@ export function FilterDrawer({ open, onOpenChange }: FilterDrawerProps) {
           </div>
 
           {/* Footer with buttons */}
-          <DrawerFooter className="px-4 py-6">
-            <div className="flex gap-1 w-full">
+          <DrawerFooter className="mt-auto flex flex-col gap-2 p-0 py-6">
+            <div className="flex gap-4 ">
               <Button
                 variant="outline"
-                className="flex-1 h-12 text-lg rounded-full border-gray-200 hover:bg-gray-50"
+                className="flex-1 h-12 text-lg rounded-full border-gray-600 hover:bg-gray-50"
                 onClick={() => onOpenChange(false)}
               >
                 Reset
               </Button>
               <Button
-                className="flex-1 h-12 text-lg rounded-full bg-[#1c1c1c] hover:bg-[#2c2c2c]"
-                onClick={handleApply}
-              >
-                Apply
-              </Button>
+  className="flex-1 h-12 text-lg rounded-full bg-primary"
+  onClick={handleApply}
+>
+  Apply
+</Button>
+
             </div>
           </DrawerFooter>
         </div>
