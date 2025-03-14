@@ -33,7 +33,7 @@ export function SearchFab({ className }: SearchFabProps) {
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className={cn("relative p-3 rounded-full bg-white shadow-md", className)}
+        className={cn("relative p-3 rounded-full bg-white shadow-md animate-glow", className)}
         onClick={() => setIsOpen(true)}
       >
         <Search className="w-7 h-7" />
@@ -98,13 +98,14 @@ export function SearchFab({ className }: SearchFabProps) {
           >
             {/* Wrapper container */}
             <div className="relative w-[90%] max-w-md">
-              <motion.div
-                className="bg-white p-4 rounded-lg shadow-lg w-full"
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: 50, opacity: 0 }}
-                onClick={(e) => e.stopPropagation()}
-              >
+            <motion.div
+  className="bg-white p-4 rounded-lg shadow-lg w-full"
+  initial={{ y: 50, opacity: 0 }}
+  animate={{ y: 0, opacity: 1 }}
+  exit={{ y: 50, opacity: 0 }}
+  onClick={(e) => e.stopPropagation()}
+  onTouchStart={(e) => e.stopPropagation()}
+>
                 <textarea
                   placeholder="Search for properties..."
                   className={cn(
@@ -130,7 +131,7 @@ export function SearchFab({ className }: SearchFabProps) {
                   ) : (
                     <>
                       Search
-                      <Sparkles className="w-6 h-6 text-gray-500 ml-2" />
+                      <Sparkles className="w-5 h-5 text-gray-500 ml-2" />
                     </>
                   )}
                 </button>
@@ -152,15 +153,14 @@ export function SearchFab({ className }: SearchFabProps) {
         .shiny-text {
           background: linear-gradient(
             90deg,
-            rgba(82, 82, 82, 0.2) 0%,
+            rgba(66, 66, 66, 0.2) 0%,
             rgb(35, 35, 35) 50%,
-            rgba(106, 106, 106, 0.2) 100%
+            rgba(84, 84, 84, 0.2) 100%
           );
           background-size: 200% auto;
           color: transparent;
           -webkit-background-clip: text;
-          animation: shimmer 3s linear infinite;
-          font-weight: bold;
+          animation: shimmer 5s linear infinite;
         }
 
         @keyframes shimmer {
