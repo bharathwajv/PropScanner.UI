@@ -13,17 +13,17 @@ interface SearchFabProps {
 export function SearchFab({ className }: SearchFabProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = () => {
-    if (searchQuery.trim() === '') return;
-    
+    if (searchQuery.trim() === "") return;
+
     toast.loading("Discovering treasures from our garage");
     setIsAnalyzing(true);
     setTimeout(() => {
       setIsAnalyzing(false);
       toast.dismiss();
-      toast.error("ship, something went wrong!");
+      toast.error("Ship, something went wrong!");
     }, 4000);
   };
 
@@ -38,28 +38,28 @@ export function SearchFab({ className }: SearchFabProps) {
       >
         <Search className="w-7 h-7" />
         <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.3 }}
-        className="absolute inset-0 rounded-full animate-glow"
-      />
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.3 }}
+          className="absolute inset-0 rounded-full animate-glow"
+        />
 
-      <motion.div
-        animate={{
-          y: [0, -3, 0],  // Floating effect
-          rotate: [0, 10, -10, 0], // Slight tilting motion
-          opacity: [1, 0.8, 1], // Twinkling effect
-        }}
-        transition={{
-          duration: 1.2,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute -top-1 -right-1"
-      >
-        <Sparkles className="w-6 h-6 text-yellow-400" />
-      </motion.div>
-    </motion.button>
+        <motion.div
+          animate={{
+            y: [0, -3, 0], // Floating effect
+            rotate: [0, 10, -10, 0], // Slight tilting motion
+            opacity: [1, 0.8, 1], // Twinkling effect
+          }}
+          transition={{
+            duration: 1.2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute -top-1 -right-1"
+        >
+          <Sparkles className="w-6 h-6 text-yellow-400" />
+        </motion.div>
+      </motion.button>
 
       {/* Search Popup */}
       <AnimatePresence>
@@ -90,9 +90,14 @@ export function SearchFab({ className }: SearchFabProps) {
                   disabled={isAnalyzing}
                 />
                 <button
-                  className="mt-3 p-2 bg-white border border-gray-300 rounded-lg shadow-md flex items-center justify-center w-full"
+                  className={cn(
+                    "mt-3 p-2 bg-white border border-gray-300 rounded-lg shadow-md flex items-center justify-center w-full",
+                    searchQuery.trim() === ""
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-gray-100"
+                  )}
                   onClick={handleSearch}
-                  disabled={isAnalyzing}
+                  disabled={isAnalyzing || searchQuery.trim() === ""}
                 >
                   {isAnalyzing ? (
                     <span className="animate-pulse">Analyzing...</span>
