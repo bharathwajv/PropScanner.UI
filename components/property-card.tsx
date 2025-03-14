@@ -32,6 +32,7 @@ interface PropertyCardProps {
   source: string
   location: string
   type?: string
+  extraPhotos? : number
   onClick?: () => void
 }
 
@@ -44,6 +45,7 @@ export default function PropertyCard({
   source,
   location,
   type,
+  extraPhotos,
   onClick,
 }: PropertyCardProps) {
   const dispatch = useDispatch()
@@ -125,6 +127,7 @@ export default function PropertyCard({
   }
 
   const isNotificationSet = notificationAlerts.some((alert) => alert.location === id)
+ // const [extraPhotos, setExtraPhotos] = useState(Math.floor(Math.random() * 13) + 3) // Random number between 3 and 15
 
   return (
     <>
@@ -146,6 +149,19 @@ export default function PropertyCard({
               <Building className="w-4 h-4" />
               {source}
             </Badge>
+
+            {/* Extra photos indicator */}
+            <motion.div
+              className="absolute top-1/2 right-0 h-20 w-10 text-white font-semibold text-lg 
+             flex items-center justify-center rounded-bl-[100%] rounded-tl-[100%] 
+             -translate-y-1/2"
+              style={{
+                backdropFilter: "blur(14px)",
+                WebkitBackdropFilter: "blur(14px)"
+              }}
+            >
+              +{extraPhotos}
+            </motion.div>
             <div className="absolute bottom-2 right-2 flex gap-2">
               <button
                 className={cn(

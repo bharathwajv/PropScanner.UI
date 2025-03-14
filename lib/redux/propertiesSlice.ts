@@ -23,6 +23,7 @@ interface Property {
   taxesPerYear: number
   description: string
   roadFacing: string
+  extraPhotos? : number
 }
 
 interface PropertiesState {
@@ -54,7 +55,8 @@ const initialState: PropertiesState = {
       "energyRating": "A",
       "taxesPerYear": 120000,
       "description": "Modern 3 BHK apartment with excellent amenities in Besant Nagar.",
-      "roadFacing": "North"
+      "roadFacing": "North",
+      "extraPhotos" : 3
     },
     {
       "id": "magicbricks-1",
@@ -78,7 +80,8 @@ const initialState: PropertiesState = {
       "energyRating": "A+",
       "taxesPerYear": 250000,
       "description": "Luxurious penthouse with panoramic city views and premium finishes.",
-      "roadFacing": "North"
+      "roadFacing": "North",
+      "extraPhotos" : 6
     }, {
       "id": "99acres-2",
       "image": "https://imagecdn.99acres.com/media1/28486/17/569737373O-1739602780639.jpg",
@@ -101,7 +104,8 @@ const initialState: PropertiesState = {
       "energyRating": "B",
       "taxesPerYear": 120000,
       "description": "Modern apartment with excellent connectivity and amenities.",
-      "roadFacing": "North"
+      "roadFacing": "North",
+      "extraPhotos" : 4
     },
     {
       "id": "nobroker-2",
@@ -125,7 +129,8 @@ const initialState: PropertiesState = {
       "energyRating": "B+",
       "taxesPerYear": 80000,
       "description": "Cozy independent house with a garden and modern facilities.",
-      "roadFacing": "East"
+      "roadFacing": "East",
+      "extraPhotos" : 3
     },
     {
       "id": "nobroker-3",
@@ -149,7 +154,8 @@ const initialState: PropertiesState = {
       "energyRating": "A+",
       "taxesPerYear": 150000,
       "description": "Luxurious villa with spacious rooms and premium amenities.",
-      "roadFacing": "South"
+      "roadFacing": "South",
+      "extraPhotos" : 10
     },
     {
       "id": "99acres-1",
@@ -173,7 +179,8 @@ const initialState: PropertiesState = {
       "energyRating": "A+",
       "taxesPerYear": 200000,
       "description": "Spacious mansion offering luxurious living spaces and modern amenities.",
-      "roadFacing": "West"
+      "roadFacing": "West",
+      "extraPhotos" : 9
     },
    
     {
@@ -198,7 +205,8 @@ const initialState: PropertiesState = {
       "energyRating": "B+",
       "taxesPerYear": 140000,
       "description": "Spacious builder floor offering a blend of modern and traditional aesthetics.",
-      "roadFacing": "East"
+      "roadFacing": "East",
+      "extraPhotos" : 3
     },
     
     {
@@ -223,7 +231,8 @@ const initialState: PropertiesState = {
       "energyRating": "B",
       "taxesPerYear": 100000,
       "description": "Compact studio apartment ideal for modern living in a prime location.",
-      "roadFacing": "South"
+      "roadFacing": "South",
+      "extraPhotos" : 13
     }
   ],  
   pinnedFields: [],

@@ -139,6 +139,19 @@ export function PropertyDetailsPopup() {
                     <Building className="w-3 h-3" />
                     {property.source}
                   </Badge>
+
+                  {/* Extra photos indicator */}
+                  <motion.div
+                    className="absolute top-1/2 right-0 h-20 w-10 text-white font-semibold text-lg 
+             flex items-center justify-center rounded-bl-[100%] rounded-tl-[100%] 
+             -translate-y-1/2"
+                    style={{
+                      backdropFilter: "blur(14px)",
+                      WebkitBackdropFilter: "blur(14px)"
+                    }}
+                  >
+                    +{property.extraPhotos}
+                  </motion.div>
                 </motion.div>
 
                 <div>
