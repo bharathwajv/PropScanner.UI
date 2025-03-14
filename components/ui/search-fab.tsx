@@ -39,7 +39,7 @@ export function SearchFab({ onClick, className }: SearchFabProps) {
         }}
         className="absolute -top-1 -right-1"
       >
-        <Sparkles className="w-5 h-5 text-yellow-400" />
+        <Sparkles className="w-6 h-6 text-yellow-400" />
       </motion.div>
     </motion.button>
   )
