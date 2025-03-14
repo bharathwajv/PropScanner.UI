@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, Sparkles, X, WandSparkles } from "lucide-react";
+import { Search, Sparkles, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import toast from "react-hot-toast";
@@ -38,13 +38,6 @@ export function SearchFab({ className }: SearchFabProps) {
       >
         <Search className="w-7 h-7" />
         <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.3 }}
-          className="absolute inset-0 rounded-full animate-glow"
-        />
-
-        <motion.div
           animate={{
             y: [0, -3, 0], // Floating effect
             rotate: [0, 10, -10, 0], // Slight tilting motion
@@ -70,7 +63,7 @@ export function SearchFab({ className }: SearchFabProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            {/* Wrapper container with original width constraints */}
+            {/* Wrapper container */}
             <div className="relative w-[90%] max-w-md">
               <motion.div
                 className="bg-white p-4 rounded-lg shadow-lg w-full"
@@ -100,7 +93,7 @@ export function SearchFab({ className }: SearchFabProps) {
                   disabled={isAnalyzing || searchQuery.trim() === ""}
                 >
                   {isAnalyzing ? (
-                    <span className="animate-pulse">Analyzing...</span>
+                    <span className="shiny-text">Analyzing...</span>
                   ) : (
                     <>
                       Search
@@ -109,7 +102,7 @@ export function SearchFab({ className }: SearchFabProps) {
                   )}
                 </button>
               </motion.div>
-              {/* Floating Close Button Outside the Popup */}
+              {/* Floating Close Button */}
               <button
                 onClick={() => setIsOpen(false)}
                 className="absolute left-1/2 transform -translate-x-1/2 translate-y-full mt-2 p-2 rounded-full bg-white shadow-lg border border-gray-300 hover:bg-gray-200"
@@ -120,6 +113,32 @@ export function SearchFab({ className }: SearchFabProps) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* CSS for Left-to-Right Shimmer Animation */}
+      <style jsx>{`
+        .shiny-text {
+          background: linear-gradient(
+            90deg,
+            rgba(82, 82, 82, 0.2) 0%,
+            rgb(35, 35, 35) 50%,
+            rgba(106, 106, 106, 0.2) 100%
+          );
+          background-size: 200% auto;
+          color: transparent;
+          -webkit-background-clip: text;
+          animation: shimmer 3s linear infinite;
+          font-weight: bold;
+        }
+
+        @keyframes shimmer {
+          0% {
+            background-position: 200% 0;
+          }
+          100% {
+            background-position: -200% 0;
+          }
+        }
+      `}</style>
     </>
   );
 }
