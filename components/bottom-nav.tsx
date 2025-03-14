@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { setIsSearchOpen } from "@/lib/redux/uiSlice"
 import type { RootState } from "@/lib/redux/store"
 import { motion, AnimatePresence } from "framer-motion"
+import { SearchFab } from "./ui/search-fab"
 
 interface BottomNavProps {
   className?: string
@@ -117,18 +118,13 @@ export function BottomNav({ className }: BottomNavProps) {
                 transition={{ delay: 0.2 }}
                 className="flex items-center"
               >
-                <button
-                  onClick={() => dispatch(setIsSearchOpen(true))}
+                 <SearchFab
+                  onClick={() => {
+                   // dispatch(setIsSearchOpen(true))
+                    //router.push("/search-results")
+                  }}
                   className="p-4 rounded-full bg-white shadow-lg text-muted-foreground hover:text-primary transition-colors flex items-center justify-center relative border border-black/10"
-                >
-                  <Search className="w-7 h-7" />
-                  <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.5, duration: 0.3 }}
-                    className="absolute inset-0 rounded-full animate-glow"
-                  />
-                </button>
+                />
               </motion.div>
             )}
           </div>

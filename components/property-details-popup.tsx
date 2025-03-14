@@ -89,7 +89,6 @@ export function PropertyDetailsPopup() {
     setIsBookingCall(false)
     toast.success("Call scheduled successfully!")
   }
-  const areaInSqft = property.specs?.area ? Number(property.specs.area) * 10.7639 : null
 
   return (
     <AnimatePresence>
@@ -193,7 +192,7 @@ export function PropertyDetailsPopup() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Square className="w-4 h-4" />
-                    <span>{areaInSqft ? areaInSqft.toFixed(2) : "N/A"} sqft</span>
+                    <span>{property.specs?.area} sqft</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Home className="w-4 h-4" />

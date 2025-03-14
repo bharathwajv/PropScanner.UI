@@ -174,7 +174,7 @@ export default function PropertyCard({
                   {title}
                 </motion.h3>
                 <motion.div layoutId={`property-specs-${id}`} className={`text-sm ${textColor} mt-1 truncate`}>
-                  {specs.beds}bd {specs.baths}ba {specs.area}
+                  {specs.beds} beds {specs.baths} baths {specs.area} sq.ft.
                 </motion.div>
                 <motion.div
                   layoutId={`property-location-${id}`}

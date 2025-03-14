@@ -40,7 +40,7 @@ const initialState: PropertiesState = {
       "specs": {
         "beds": 3,
         "baths": 2,
-        "area": "1200 sqft"
+        "area": "1200"
       },
       "has360Tour": false,
       "source": "NoBroker",
@@ -64,7 +64,7 @@ const initialState: PropertiesState = {
       "specs": {
         "beds": 5,
         "baths": 5,
-        "area": "3000 sqft"
+        "area": "3000 "
       },
       "has360Tour": true,
       "source": "MagicBricks",
@@ -87,7 +87,7 @@ const initialState: PropertiesState = {
       "specs": {
         "beds": 3,
         "baths": 3,
-        "area": "1400 sqft"
+        "area": "1400 "
       },
       "has360Tour": false,
       "source": "99acres",
@@ -111,7 +111,7 @@ const initialState: PropertiesState = {
       "specs": {
         "beds": 2,
         "baths": 2,
-        "area": "900 sqft"
+        "area": "900 "
       },
       "has360Tour": true,
       "source": "NoBroker",
@@ -135,7 +135,7 @@ const initialState: PropertiesState = {
       "specs": {
         "beds": 4,
         "baths": 4,
-        "area": "2000 sqft"
+        "area": "2000 "
       },
       "has360Tour": false,
       "source": "NoBroker",
@@ -159,7 +159,7 @@ const initialState: PropertiesState = {
       "specs": {
         "beds": 7,
         "baths": 7,
-        "area": "3500 sqft"
+        "area": "3500 "
       },
       "has360Tour": true,
       "source": "99acres",
@@ -184,7 +184,7 @@ const initialState: PropertiesState = {
       "specs": {
         "beds": 6,
         "baths": 5,
-        "area": "2800 sqft"
+        "area": "2800 "
       },
       "has360Tour": false,
       "source": "99acres",
@@ -209,7 +209,7 @@ const initialState: PropertiesState = {
       "specs": {
         "beds": 2,
         "baths": 2,
-        "area": "850 sqft"
+        "area": "850 "
       },
       "has360Tour": false,
       "source": "MagicBricks",
