@@ -355,12 +355,12 @@ export function PropertyDetailsPopup() {
               {/* Modified Button to match the image style */}
               <Button
                 variant="outline"
-                className="flex-1 min-w-[120px] bg-gray-100 hover:bg-gray-200 text-black rounded-lg flex items-center justify-between px-6 border border-gray-300"
+                className="flex-1 min-w-[120px]  text-black rounded-lg flex items-center justify-between px-6 border border-gray-300"
                 onClick={handleOpenSource}
               >
                 <span className="text-lg truncate">Open {property.source}</span>
                 <motion.div
-                  className="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0"
+                  className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center flex-shrink-0"
                   initial={{ x: 0, opacity: 0 }}
                   animate={{ x: 12, opacity: 1 }}
                   transition={{
@@ -386,9 +386,9 @@ export function PropertyDetailsPopup() {
                 onClick={handleBookCall}
                 className="flex-1 min-w-[120px] bg-primary hover:bg-primary/90 text-lg p-3"
                 loading={isBookingCall}
-                loadingStates={["Finding Slots", "Booking Call", "Bingo!"]}
+                loadingStates={["Finding Slots", "Assigning Expert", "Bingo!"]}
               >
-                Book a Call
+                Schedule Visit
               </LoadingButton>
             </div>
           </motion.div>

@@ -15,9 +15,9 @@ export function LoadingScreen() {
           clearInterval(timer)
           return 100
         }
-        return Math.min(oldProgress + 2, 100)
+        return Math.min(oldProgress + 3, 100)
       })
-    }, 50)
+    }, 40)
 
     return () => {
       clearInterval(timer)
@@ -29,18 +29,24 @@ export function LoadingScreen() {
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
         className="w-24 h-24 relative mb-8"
       >
         <Image src="/placeholder.svg" alt="PropScanner Logo" fill className="object-contain" priority />
       </motion.div>
       <div className="w-64">
-        <Progress value={progress} className="h-1" />
+        <motion.div
+          initial={{ width: "0" }}
+          animate={{ width: `${Math.min(progress + 70 , 100)}%` }}
+          transition={{ ease: "easeInOut", duration: 0.4 }}
+        >
+          <Progress value={progress} className="h-1 primary" />
+        </motion.div>
       </div>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
+        transition={{ delay: 0.5, ease: "easeInOut" }}
         className="absolute bottom-8 text-xl font-semibold text-muted-foreground"
       >
         PropScanner
@@ -48,4 +54,3 @@ export function LoadingScreen() {
     </div>
   )
 }
-

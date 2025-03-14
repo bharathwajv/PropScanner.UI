@@ -23,7 +23,9 @@ export default function RootPage() {
     //   // For returning visitors, go directly to home if onboarding is completed
     //   router.push(onboardingCompleted ? "/home" : "/onboarding")
     // }
-     router.push("/home")
+    setTimeout(() => {
+      router.push("/home")
+        }, 1500) 
   })
 
   return <LoadingScreen />
