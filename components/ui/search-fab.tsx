@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, Sparkles, X } from "lucide-react";
+import { Search, Sparkle, Sparkles, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import toast from "react-hot-toast";
@@ -33,24 +33,57 @@ export function SearchFab({ className }: SearchFabProps) {
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className={cn("relative p-3 rounded-full bg-white shadow-md animate-glow", className)}
+        className={cn("relative p-3 rounded-full bg-white shadow-md", className)}
         onClick={() => setIsOpen(true)}
       >
         <Search className="w-7 h-7" />
+
+        {/* Sparkles with pulse effect */}
         <motion.div
           animate={{
-            y: [0, -3, 0], // Floating effect
-            rotate: [0, 10, -10, 0], // Slight tilting motion
-            opacity: [1, 0.8, 1], // Twinkling effect
+            scale: [1, 1.2, 1], // Expanding and shrinking effect
+            opacity: [0.8, 1, 0.8],
           }}
           transition={{
             duration: 1.2,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute -top-1 -right-1"
+          className="absolute -top-2 -right-1"
         >
-          <Sparkles className="w-6 h-6 text-yellow-400" />
+          <Sparkle className="w-5 h-5 text-yellow-400" />
+        </motion.div>
+
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1], // Slightly bigger pulse
+            opacity: [0.7, 1, 0.7],
+          }}
+          transition={{
+            duration: 1.2,
+            repeat: Infinity,
+            delay: 0.2,
+            ease: "easeInOut",
+          }}
+          className="absolute top-1/2 -left-3"
+        >
+          <Sparkle className="w-6 h-6 text-yellow-400" />
+        </motion.div>
+
+        <motion.div
+          animate={{
+            scale: [1, 1.1, 1], // Smallest pulse effect
+            opacity: [0.6, 1, 0.6],
+          }}
+          transition={{
+            duration: 1.2,
+            repeat: Infinity,
+            delay: 0.4,
+            ease: "easeInOut",
+          }}
+          className="absolute bottom-1 -right-2"
+        >
+          <Sparkle className="w-4 h-4 text-yellow-400" />
         </motion.div>
       </motion.button>
 
